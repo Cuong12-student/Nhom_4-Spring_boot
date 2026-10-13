@@ -10,6 +10,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: school_supplies
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,6 +36,10 @@ jobs:
           cache: maven
 
       - name: Build with Maven
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/school_supplies
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: root
         run: chmod +x mvnw && ./mvnw clean verify
 
       - name: Upload JAR artifact
