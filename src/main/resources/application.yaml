@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: school-supplies-store
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/school_supplies
+    username: root
+    password: Cuong126@
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8080
