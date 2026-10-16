@@ -18,6 +18,10 @@ Các bước thực hiện khi giải nén file:
 - mvnw.cmd spring-boot:run hoặc .\mvnw.cmd spring-boot:run
 - Nếu có xảy ra lỗi gì thì đến lớp để xử lý lỗi nhé. @All
 
+## LƯU Ý VỀ SQL CONNECTION (MYSQL)
+- vào đường dẫn ..\src\main\resources\application.yaml
+- để sửa lại thông tin kết nối đến sql local trên máy
+
 ## 🌟 Tính năng chính
 
 > WIP
