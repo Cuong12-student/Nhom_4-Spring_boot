@@ -1,7 +1,6 @@
 # 🛒 School Supplies Store
 
-[![Spring Boot](https://shields.io)](https://spring.io)
-[![Maven](https://shields.io)](https://apache.org)
+## Guides
 
 > Hệ thống quản lý và bán văn phòng phẩm trực tuyến dành cho các trường học.
 
