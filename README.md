@@ -9,14 +9,14 @@ Các bước thực hiện khi giải nén file:
 - Bước 2: CREATE DATABASE school_supplies; trong MySQL
 - Bước 3: Nhớ kiểm tra cấu hình application.yml
 - Bước 4: Chạy các lệnh:
-- git init
-- git remote add origin https://github.com/Cuong12-student/Nhom_4-Spring_boot.git
-- git fetch origin
-- git switch -c main --track origin/main
+-- git init
+-- git remote add origin https://github.com/Cuong12-student/Nhom_4-Spring_boot.git
+-- git fetch origin
+-- git switch -c main --track origin/main
 - Bước 5: Mở terminal và chạy lệnh:
-- mvnw.cmd clean verify hoặc .\mvnw.cmd clean verify
-- mvnw.cmd spring-boot:run hoặc .\mvnw.cmd spring-boot:run
-- Nếu có xảy ra lỗi gì thì đến lớp để xử lý lỗi nhé. @All
+-- mvnw.cmd clean verify hoặc .\mvnw.cmd clean verify
+-- mvnw.cmd spring-boot:run hoặc .\mvnw.cmd spring-boot:run
+-- Nếu có xảy ra lỗi gì thì đến lớp để xử lý lỗi nhé. @All
 
 ## LƯU Ý VỀ SQL CONNECTION (MYSQL)
 - vào đường dẫn ..\src\main\resources\application.yaml
