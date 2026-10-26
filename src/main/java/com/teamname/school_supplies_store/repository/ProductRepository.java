@@ -4,8 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository 
-public interface ProductRepository extends JpaRepository<Product, Integer>{
-    List<Product> findByVariants_IdVariant(Integer idVariant);
-    List<Product> findByCategory_Id(Integer id);
+public interface ProductRepository extends JpaRepository<Product, Long>{
+    List<Product> findByVariants_IdVariant(Long idVariant);
+    List<Product> findByCategory_IdCategory(Long idCategory);
     boolean existsByNameIgnoreCase(String name);
 }

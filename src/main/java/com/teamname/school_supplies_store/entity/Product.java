@@ -1,99 +1,96 @@
-package com.teamname.school_supplies_store.entity; 
-import java.math.BigDecimal;
+package com.teamname.school_supplies_store.entity;
 
-import com.teamname.school_supplies_store.enums.ProductStatus;
-
-import java.util.List;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.persistence.Entity; 
-import jakarta.persistence.Table; 
-import jakarta.persistence.Id; 
-import jakarta.persistence.GeneratedValue; 
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;  
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.ManyToOne;
+import com.teamname.school_supplies_store.enums.ProductStatus;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name="products")
-public class Product{
+@Table(name = "products", indexes = {
+    @Index(name = "idx_products_category_status", columnList = "id_category, status"),
+    @Index(name = "idx_products_slug", columnList = "slug", unique = true)
+})
+public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_product")
-    private Integer idProduct;
-    @NotBlank (message="Tên sản phẩm không được trống")
-    @Column(nullable = false,unique=true)
+    @Column(name = "id_product")
+    private Long idProduct;
+
+    @NotBlank(message = "Tên sản phẩm không được trống")
+    @Column(nullable = false, length = 255)
     private String name;
+
+    @NotBlank(message = "Slug không được trống")
+    @Column(nullable = false, unique = true, length = 255)
+    private String slug;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
-    @NotNull(message="Giá sản phẩm không được trống")
-    @Positive(message = "Giá sản phẩm phải lớn hơn 0")
-    @Column (nullable = false,precision = 12, scale = 0)
-    private BigDecimal price;
-    private String image;
-    @NotBlank(message="Trạng thái phải hiển thị")
-    @Column(nullable = false)
-    private ProductStatus status;
-    @OneToMany (mappedBy="product")
-    private List<ProductVariant> variants;
-    @ManyToOne
-    @JoinColumn(name="id_category")
+
+    @Column(name = "main_image", length = 512)
+    private String mainImage;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private ProductStatus status = ProductStatus.ACTIVE;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_category", nullable = false, foreignKey = @ForeignKey(name = "fk_products_category"))
     private Category category;
-    public Product(){}
-    public Product(String name,String description, BigDecimal price, String image, ProductStatus status){
-        this.name=name;
-        this.description=description;
-        this.price=price;
-        this.image=image;
-        this.status=status;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ProductVariant> variants = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+    public Product() {}
+
+    public void addVariant(ProductVariant variant) {
+        variants.add(variant);
+        variant.setProduct(this);
     }
-    public Integer getIdProduct(){
-        return idProduct;
+
+    public void removeVariant(ProductVariant variant) {
+        variants.remove(variant);
+        variant.setProduct(null);
     }
-    public void setIdProduct(Integer idProduct){
-        this.idProduct=idProduct;
-    }
-    public String getName(){
-        return name;
-    }
-    public void setName(String name){
-        this.name=name;
-    }
-    public String getDescription(){
-        return description;
-    }
-    public void setDescription(String description){
-        this.description=description;
-    }
-    public BigDecimal getPrice(){
-        return price;
-    }
-    public void setPrice(BigDecimal price){
-        this.price=price;
-    }
-    public String getImage(){
-        return image;
-    }
-    public void setImage(String image){
-        this.image=image;
-    }
-    public ProductStatus getStatus(){
-        return status;
-    }
-    public void setStatus(ProductStatus status){
-        this.status=status;
-    }
-    public List<ProductVariant> getVariant(){
-        return variants;
-    }
-    public void setVariant(List<ProductVariant> variants){
-        this.variants=variants;
-    }
-    public Category getCategory(){
-        return category;
-    }
-    public void setCategory(Category category){
-        this.category=category;
-    }
+
+    public Long getIdProduct() { return idProduct; }
+    public void setIdProduct(Long idProduct) { this.idProduct = idProduct; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getSlug() { return slug; }
+    public void setSlug(String slug) { this.slug = slug; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getMainImage() { return mainImage; }
+    public void setMainImage(String mainImage) { this.mainImage = mainImage; }
+
+    public ProductStatus getStatus() { return status; }
+    public void setStatus(ProductStatus status) { this.status = status; }
+
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
+
+    public List<ProductVariant> getVariants() { return variants; }
+    public void setVariants(List<ProductVariant> variants) { this.variants = variants; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
 }

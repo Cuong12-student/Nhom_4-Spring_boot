@@ -6,5 +6,5 @@ import java.util.List;
 @Repository 
 public interface CartItemRepository extends JpaRepository<CartItem, Integer>{
     List<CartItem> findByCart_IdCart(Integer idCart);
-    List<CartItem> findByVariant_IdVariant(Integer idVariant);
+    List<CartItem> findByVariant_IdVariant(Long idVariant);
 }

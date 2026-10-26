@@ -5,9 +5,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.List;
 @Repository 
-public interface ProductVariantRepository extends JpaRepository<ProductVariant, Integer>{
-    Optional<ProductVariant> findByInventory_Id(Integer id);
+public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long>{
+    Optional<ProductVariant> findByInventory_IdInventory(Long idInventory);
     List<ProductVariant> findByOrderDetails_Id(Integer id);
-    List<ProductVariant> findByProduct_IdProduct(Integer idProduct);
+    List<ProductVariant> findByProduct_IdProduct(Long idProduct);
     List<ProductVariant> findByCartItems_IdItem(Integer idItem);
 } 

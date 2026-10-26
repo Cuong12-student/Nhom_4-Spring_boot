@@ -6,5 +6,5 @@ import java.util.List;
 @Repository 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail,Integer>{
     List<OrderDetail> findByOrder_IdOrder(Integer idOrder);
-    List<OrderDetail> findByVariant_IdVariant(Integer idVariant);
+    List<OrderDetail> findByVariant_IdVariant(Long idVariant);
 } 
