@@ -1,0 +1,28 @@
+
+store page
+    - hiển thị sản phẩm (yêu cầu list base đầu ra)
+    - sreach sản phẩm (có khả năng search the index name)
+    - lọc sản phẩn (giá tiền, kích thước, product, categories, màu sắc,.. [nhìn trong DB])
+    - sort theo (giá tiền, tên, ngày tạo, popular(chắc tạo thêm một bảng để lưu thông tin những sản phẩm đã bán))
+    - addcart
+
+-- list hiển thị sản phâm
+    + tên
+    + ảnh
+    + categories
+    + giá
+
+
+
+
+
+===============================================================================
+
+
+detail product page (page hiển thị thông tin của sản phẩm)
+    - add cart
+    - mô tả sản phảm (ảnh, tên, giá tiền, thông tin,..(check db))
+
+cart page
+    - cart hiện tại
+    - lịch sử cart
