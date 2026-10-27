@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StoreProductVariantRepository extends JpaRepository<ProductVariant, Long>,
+public interface StorePageProductVariantRepository extends JpaRepository<ProductVariant, Long>,
         JpaSpecificationExecutor<ProductVariant> {
     Optional<ProductVariant> findByInventory_IdInventory(Long idInventory);
     List<ProductVariant> findByOrderDetails_Id(Integer id);

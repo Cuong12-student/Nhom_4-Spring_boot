@@ -6,8 +6,8 @@ import com.teamname.school_supplies_store.entity.ProductVariant;
 import com.teamname.school_supplies_store.enums.CategoryStatus;
 import com.teamname.school_supplies_store.enums.OrderStatus;
 import com.teamname.school_supplies_store.enums.ProductStatus;
-import com.teamname.school_supplies_store.user.dto.response.ProductSummaryResponse;
-import com.teamname.school_supplies_store.user.repository.StoreProductVariantRepository;
+import com.teamname.school_supplies_store.user.dto.response.StorePageProductResponse;
+import com.teamname.school_supplies_store.user.repository.StorePageProductVariantRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -31,19 +31,19 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class StorePageServiceImpl implements StorePageService {
 
     private static final Pattern ATTRIBUTE_NAME_PATTERN = Pattern.compile("[A-Za-z0-9_-]+");
 
-    private final StoreProductVariantRepository productVariantRepository;
+    private final StorePageProductVariantRepository storePageProductVariantRepository;
 
-    public ProductServiceImpl(StoreProductVariantRepository productVariantRepository) {
-        this.productVariantRepository = productVariantRepository;
+    public StorePageServiceImpl(StorePageProductVariantRepository storePageProductVariantRepository) {
+        this.storePageProductVariantRepository = storePageProductVariantRepository;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductSummaryResponse> searchProducts(
+    public Page<StorePageProductResponse> searchStorePageProducts(
             String keyword,
             BigDecimal minPrice,
             BigDecimal maxPrice,
@@ -58,8 +58,9 @@ public class ProductServiceImpl implements ProductService {
         boolean popularSort = "popular".equalsIgnoreCase(sort);
         Specification<ProductVariant> specification = buildSpecification(
                 keyword, minPrice, maxPrice, productId, categoryId, attributes, popularSort, direction);
-        Page<ProductVariant> productVariants = productVariantRepository.findAll(specification, pageable);
-        return productVariants.map(this::mapToSummaryResponse);
+        Page<ProductVariant> productVariants =
+                storePageProductVariantRepository.findAll(specification, pageable);
+        return productVariants.map(this::mapToStorePageProductResponse);
     }
 
     private Specification<ProductVariant> buildSpecification(
@@ -186,9 +187,9 @@ public class ProductServiceImpl implements ProductService {
                 .replace("_", "\\_");
     }
 
-    private ProductSummaryResponse mapToSummaryResponse(ProductVariant productVariant) {
+    private StorePageProductResponse mapToStorePageProductResponse(ProductVariant productVariant) {
         var product = productVariant.getProduct();
-        return new ProductSummaryResponse(
+        return new StorePageProductResponse(
                 productVariant.getIdVariant(),
                 product.getName(),
                 productVariant.getImage() != null ? productVariant.getImage() : product.getMainImage(),

@@ -4,7 +4,7 @@ import com.teamname.school_supplies_store.enums.ProductStatus;
 
 import java.math.BigDecimal;
 
-public record ProductSummaryResponse(
+public record StorePageProductResponse(
         Long idVariant,
         String name,
         String mainImage,

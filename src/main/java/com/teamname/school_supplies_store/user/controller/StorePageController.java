@@ -1,7 +1,7 @@
 package com.teamname.school_supplies_store.user.controller;
 
-import com.teamname.school_supplies_store.user.dto.response.ProductSummaryResponse;
-import com.teamname.school_supplies_store.user.service.ProductService;
+import com.teamname.school_supplies_store.user.dto.response.StorePageProductResponse;
+import com.teamname.school_supplies_store.user.service.StorePageService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,16 +21,16 @@ import java.util.Locale;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/products")
-public class ProductController {
+@RequestMapping({"/api/v1/store-page/products", "/api/v1/products"})
+public class StorePageController {
 
     private static final int MAX_PAGE_SIZE = 100;
     private static final String ATTRIBUTE_PARAMETER_PREFIX = "attribute.";
 
-    private final ProductService productService;
+    private final StorePageService storePageService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public StorePageController(StorePageService storePageService) {
+        this.storePageService = storePageService;
     }
 
     /**
@@ -49,7 +49,7 @@ public class ProductController {
      * đã hoàn thành; đơn đang xử lý hoặc đã hủy không được tính.</p>
      */
     @GetMapping
-    public ResponseEntity<Page<ProductSummaryResponse>> searchProducts(
+    public ResponseEntity<Page<StorePageProductResponse>> searchStorePageProducts(
             @RequestParam(required = false) String q,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
@@ -69,7 +69,7 @@ public class ProductController {
                 : createSort(sort, direction);
         PageRequest pageable = PageRequest.of(page, size, pageableSort);
 
-        return ResponseEntity.ok(productService.searchProducts(
+        return ResponseEntity.ok(storePageService.searchStorePageProducts(
                 q, minPrice, maxPrice, productId, categoryId, attributes, sort, direction, pageable));
     }
 

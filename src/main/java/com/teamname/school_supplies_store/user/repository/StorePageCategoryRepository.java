@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 @Repository 
-public interface StoreCategoryRepository extends JpaRepository<Category,Long>{
+public interface StorePageCategoryRepository extends JpaRepository<Category,Long>{
     Optional<Category> findByProducts_Variants_IdVariant(Long idVariant);
     Optional<Category> findByName(String name);
     boolean existsByName(String name);

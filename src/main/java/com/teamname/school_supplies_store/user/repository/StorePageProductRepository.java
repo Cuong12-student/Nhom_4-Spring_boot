@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import java.util.List;
 @Repository 
-public interface StoreProductRepository extends JpaRepository<Product, Long>{
+public interface StorePageProductRepository extends JpaRepository<Product, Long>{
     List<Product> findByVariants_IdVariant(Long idVariant);
     List<Product> findByCategory_IdCategory(Long idCategory);
     boolean existsByNameIgnoreCase(String name);
