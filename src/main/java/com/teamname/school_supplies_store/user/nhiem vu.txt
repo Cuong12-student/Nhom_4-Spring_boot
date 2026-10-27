@@ -10,6 +10,7 @@ store page
     + tên
     + ảnh
     + categories
+    + product name
     + giá
 
 
