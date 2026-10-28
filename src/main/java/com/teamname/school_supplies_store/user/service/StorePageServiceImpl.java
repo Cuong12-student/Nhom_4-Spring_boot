@@ -47,17 +47,17 @@ public class StorePageServiceImpl implements StorePageService {
             String keyword,
             BigDecimal minPrice,
             BigDecimal maxPrice,
-            Long productId,
-            Long categoryId,
+            List<Long> productIds,
+            List<Long> categoryIds,
             Map<String, List<String>> attributes,
             String sort,
             Sort.Direction direction,
             Pageable pageable) {
 
-        validateFilters(minPrice, maxPrice, productId, categoryId, attributes);
+        validateFilters(minPrice, maxPrice, productIds, categoryIds, attributes);
         boolean popularSort = "popular".equalsIgnoreCase(sort);
         Specification<ProductVariant> specification = buildSpecification(
-                keyword, minPrice, maxPrice, productId, categoryId, attributes, popularSort, direction);
+                keyword, minPrice, maxPrice, productIds, categoryIds, attributes, popularSort, direction);
         Page<ProductVariant> productVariants =
                 storePageProductVariantRepository.findAll(specification, pageable);
         return productVariants.map(this::mapToStorePageProductResponse);
@@ -67,8 +67,8 @@ public class StorePageServiceImpl implements StorePageService {
             String keyword,
             BigDecimal minPrice,
             BigDecimal maxPrice,
-            Long productId,
-            Long categoryId,
+            List<Long> productIds,
+            List<Long> categoryIds,
             Map<String, List<String>> attributes,
             boolean popularSort,
             Sort.Direction direction) {
@@ -94,11 +94,11 @@ public class StorePageServiceImpl implements StorePageService {
             if (maxPrice != null) {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
             }
-            if (productId != null) {
-                predicates.add(criteriaBuilder.equal(product.get("idProduct"), productId));
+            if (productIds != null && !productIds.isEmpty()) {
+                predicates.add(product.get("idProduct").in(productIds));
             }
-            if (categoryId != null) {
-                predicates.add(criteriaBuilder.equal(category.get("idCategory"), categoryId));
+            if (categoryIds != null && !categoryIds.isEmpty()) {
+                predicates.add(category.get("idCategory").in(categoryIds));
             }
             addAttributePredicates(root, criteriaBuilder, predicates, attributes);
 
@@ -164,17 +164,21 @@ public class StorePageServiceImpl implements StorePageService {
     private void validateFilters(
             BigDecimal minPrice,
             BigDecimal maxPrice,
-            Long productId,
-            Long categoryId,
+            List<Long> productIds,
+            List<Long> categoryIds,
             Map<String, List<String>> attributes) {
+        boolean invalidProductIds = productIds != null
+                && productIds.stream().anyMatch(id -> id == null || id < 1);
+        boolean invalidCategoryIds = categoryIds != null
+                && categoryIds.stream().anyMatch(id -> id == null || id < 1);
         if ((minPrice != null && minPrice.signum() < 0)
                 || (maxPrice != null && maxPrice.signum() < 0)
                 || (minPrice != null && maxPrice != null && minPrice.compareTo(maxPrice) > 0)
-                || (productId != null && productId < 1)
-                || (categoryId != null && categoryId < 1)) {
+                || invalidProductIds
+                || invalidCategoryIds) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Giá lọc phải không âm và minPrice không được lớn hơn maxPrice; productId/categoryId phải dương");
+                    "Giá lọc phải không âm và minPrice không được lớn hơn maxPrice; mọi productId/categoryId phải dương");
         }
         if (attributes == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bộ lọc thuộc tính không được null");

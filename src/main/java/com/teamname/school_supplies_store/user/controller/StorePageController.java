@@ -53,8 +53,8 @@ public class StorePageController {
             @RequestParam(required = false) String q,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
-            @RequestParam(required = false) Long productId,
-            @RequestParam(required = false) Long categoryId,
+            @RequestParam(name = "productId", required = false) List<Long> productIds,
+            @RequestParam(name = "categoryId", required = false) List<Long> categoryIds,
             @RequestParam(defaultValue = "createdAt") String sort,
             @RequestParam(defaultValue = "DESC") Sort.Direction direction,
             @RequestParam(defaultValue = "0") int page,
@@ -70,7 +70,7 @@ public class StorePageController {
         PageRequest pageable = PageRequest.of(page, size, pageableSort);
 
         return ResponseEntity.ok(storePageService.searchStorePageProducts(
-                q, minPrice, maxPrice, productId, categoryId, attributes, sort, direction, pageable));
+                q, minPrice, maxPrice, productIds, categoryIds, attributes, sort, direction, pageable));
     }
 
     private void validatePagination(int page, int size) {
