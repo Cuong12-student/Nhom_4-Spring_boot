@@ -53,6 +53,13 @@ export function fetchStoreProducts(query, signal) {
   return getJson(`${PRODUCTS_URL}?${query}`, signal)
 }
 
+export function fetchStoreProductDetail(slug, sku, signal) {
+  return getJson(
+    `${PRODUCTS_URL}/${encodeURIComponent(slug)}/${encodeURIComponent(sku)}`,
+    signal,
+  )
+}
+
 /**
  * Các lựa chọn của bộ lọc, lấy từ DB:
  * {

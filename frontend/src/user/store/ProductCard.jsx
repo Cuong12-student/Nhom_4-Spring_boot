@@ -13,12 +13,17 @@ function ImagePlaceholder() {
   )
 }
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onOpen }) {
   const [broken, setBroken] = useState(false)
   const showImage = product.mainImage && !broken
 
   return (
-    <article className="us-card">
+    <a
+      className="us-card"
+      href={`/${encodeURIComponent(product.slug)}/${encodeURIComponent(product.sku)}`}
+      onClick={(event) => onOpen(event, product)}
+      aria-label={`Xem chi tiết ${product.name}`}
+    >
       <div className="us-card__media">
         {showImage ? (
           <img
@@ -39,6 +44,6 @@ export default function ProductCard({ product }) {
         <p className="us-card__sku">{product.sku}</p>
         <p className="us-card__price">{formatPrice(product.price)}</p>
       </div>
-    </article>
+    </a>
   )
 }

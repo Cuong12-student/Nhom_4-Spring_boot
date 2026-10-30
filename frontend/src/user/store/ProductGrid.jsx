@@ -13,7 +13,7 @@ function SkeletonCard() {
   )
 }
 
-export default function ProductGrid({ products, loading, skeletonCount }) {
+export default function ProductGrid({ products, loading, skeletonCount, onOpenProduct }) {
   // Lần tải đầu tiên: chưa có dữ liệu nên hiện khung chờ.
   if (!products) {
     return (
@@ -28,7 +28,11 @@ export default function ProductGrid({ products, loading, skeletonCount }) {
   return (
     <div className={`us-grid${loading ? ' is-loading' : ''}`} aria-busy={loading}>
       {products.map((product) => (
-        <ProductCard key={product.idVariant} product={product} />
+        <ProductCard
+          key={product.idVariant}
+          product={product}
+          onOpen={onOpenProduct}
+        />
       ))}
     </div>
   )

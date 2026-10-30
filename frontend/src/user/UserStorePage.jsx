@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import UserNavBar from './UserNavBar'
+import StoreProductDetailPage from './StoreProductDetailPage'
 import SearchBox from './store/SearchBox'
 import FilterPanel from './store/FilterPanel'
 import ActiveFilters from './store/ActiveFilters'
@@ -7,19 +8,73 @@ import SortBar from './store/SortBar'
 import ProductGrid from './store/ProductGrid'
 import Pagination from './store/Pagination'
 import { buildProductQuery } from './api/storeApi'
-import { useFilterOptions, useStoreProducts } from './hooks'
+import { useFilterOptions, useStoreProductDetail, useStoreProducts } from './hooks'
 import { INITIAL_FILTERS, SORT_OPTIONS, countActiveFilters } from './storeFilters'
 import './userTheme.css'
 import './UserStorePage.css'
 
+function getProductPathFromUrl() {
+  const parts = window.location.pathname.split('/').filter(Boolean)
+  if (parts.length !== 2) return null
+
+  try {
+    const [slug, sku] = parts.map((part) => decodeURIComponent(part))
+    return slug && sku ? { slug, sku } : null
+  } catch {
+    return null
+  }
+}
+
 export default function UserStorePage() {
   const [filters, setFilters] = useState(INITIAL_FILTERS)
   const [filtersOpen, setFiltersOpen] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(getProductPathFromUrl)
   const resultsRef = useRef(null)
 
   const query = useMemo(() => buildProductQuery(filters), [filters])
-  const products = useStoreProducts(query)
-  const filterOptions = useFilterOptions()
+  const products = useStoreProducts(query, !selectedProduct)
+  const productDetail = useStoreProductDetail(selectedProduct)
+  const filterOptions = useFilterOptions(!selectedProduct)
+
+  useEffect(() => {
+    const syncProductFromUrl = () => setSelectedProduct(getProductPathFromUrl())
+    window.addEventListener('popstate', syncProductFromUrl)
+    return () => window.removeEventListener('popstate', syncProductFromUrl)
+  }, [])
+
+  function openProduct(event, product) {
+    if (
+      event.defaultPrevented
+      || event.button !== 0
+      || event.metaKey
+      || event.ctrlKey
+      || event.shiftKey
+      || event.altKey
+    ) return
+
+    event.preventDefault()
+    const url = new URL(window.location.href)
+    url.pathname = `/${encodeURIComponent(product.slug)}/${encodeURIComponent(product.sku)}`
+    url.search = ''
+    url.hash = ''
+    window.history.pushState({ storeProduct: true }, '', url)
+    setSelectedProduct({ slug: product.slug, sku: product.sku })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function returnToStore() {
+    if (window.history.state?.storeProduct) {
+      window.history.back()
+      return
+    }
+
+    const url = new URL(window.location.href)
+    url.pathname = '/'
+    url.search = ''
+    url.hash = ''
+    window.history.replaceState(null, '', url)
+    setSelectedProduct(null)
+  }
 
   // Mọi thay đổi bộ lọc/sắp xếp đều quay về trang đầu.
   const update = useCallback((patch) => {
@@ -100,6 +155,22 @@ export default function UserStorePage() {
   const page = products.data
   const activeCount = countActiveFilters(filters)
   const hasResults = page && page.content.length > 0
+
+  if (selectedProduct) {
+    return (
+      <div className="us-page-root">
+        <UserNavBar activeKey="store" />
+        <StoreProductDetailPage
+          key={`${selectedProduct.slug}/${selectedProduct.sku}`}
+          product={productDetail.data}
+          loading={productDetail.loading}
+          error={productDetail.error}
+          onRetry={productDetail.reload}
+          onBack={returnToStore}
+        />
+      </div>
+    )
+  }
 
   let summary = ''
   if (page) {
@@ -183,6 +254,7 @@ export default function UserStorePage() {
                 products={page?.content}
                 loading={products.loading}
                 skeletonCount={filters.size}
+                onOpenProduct={openProduct}
               />
               <Pagination
                 page={page?.number ?? 0}
