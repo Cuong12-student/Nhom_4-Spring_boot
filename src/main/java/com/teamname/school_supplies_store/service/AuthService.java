@@ -13,7 +13,6 @@ import com.teamname.school_supplies_store.enums.Role;
 import com.teamname.school_supplies_store.repository.UserRepository;
 import com.teamname.school_supplies_store.repository.CustomerRepository;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +21,16 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
-    private final PasswordEncoder passwordEncoder;
-
+    
     // Constructor Injection
     public AuthService(
             UserRepository userRepository,
-            CustomerRepository customerRepository,
-            PasswordEncoder passwordEncoder) {
+            CustomerRepository customerRepository
+        ) {
 
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
-        this.passwordEncoder = passwordEncoder;
+        
     }
 
     // =========================
@@ -49,9 +47,8 @@ public class AuthService {
                                 "Tên đăng nhập hoặc mật khẩu không chính xác"
                         ));
 
-        if (!passwordEncoder.matches(
-                request.getPassword(),
-                user.getPassword())) {
+        if (!request.getPassword().equals(user.getPassword()
+)) {
 
             throw new RuntimeException(
                     "Tên đăng nhập hoặc mật khẩu không chính xác"
@@ -99,14 +96,13 @@ public class AuthService {
             );
         }
 
-        // 5. Mã hóa mật khẩu bằng BCrypt
-        String encodedPassword =
-                passwordEncoder.encode(request.getPassword());
+        
+       String password = request.getPassword();
 
         // 6. Tạo User
         User user = new User(
                 username,
-                encodedPassword,
+                password,
                 Role.CUSTOMER
         );
 

@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/auth";
+const API_URL = "http://localhost:8081/api/auth";
 
 export const register = async (data) => {
   console.log("Register gửi lên backend:", data);
