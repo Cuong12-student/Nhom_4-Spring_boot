@@ -130,38 +130,4 @@ public class AuthService {
         // 10. Lưu Customer
         customerRepository.save(customer);
     }
-
-    // =========================
-// MÃ HÓA TÀI KHOẢN KHỞI TẠO
-// =========================
-@Transactional
-public void encodeInitialPasswords() {
-
-    String[][] accounts = {
-        {"khach001", "khach001"},
-        {"nhanvien001", "nhanvien001"},
-        {"admin001", "admin001"}
-    };
-
-    for (String[] account : accounts) {
-
-        User user = userRepository
-                .findByUsername(account[0])
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Không tìm thấy tài khoản: " + account[0]
-                        )
-                );
-
-        // Chỉ mã hóa nếu mật khẩu chưa được mã hóa BCrypt
-        if (!user.getPassword().startsWith("$2")) {
-
-            user.setPassword(
-                    passwordEncoder.encode(account[1])
-            );
-
-            userRepository.save(user);
-        }
-    }
-  }
 }
