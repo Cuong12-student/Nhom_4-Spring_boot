@@ -27,13 +27,7 @@ public class User {
     )
     @Column(nullable = false,unique = true,length = 20)
     private String username;
-    @NotBlank (message = "Mật khẩu không được trống")
-    @Size(min=8,max=12,message = "Mật khẩu phải từ 8 đến 12 ký tự")
-    @Pattern(
-        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9\\s])\\S+$",
-        message = "Mật khẩu phải có chữ hoa, chữ thường, số và ký tự đặc biệt, không chứa khoảng trắng"
-    )
-    @Column(nullable = false)
+    @Column(nullable = false, length = 255)
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;

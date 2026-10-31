@@ -9,4 +9,9 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer>{
     Optional<Customer> findByUser_Id(Integer id);
     Optional<Customer> findByCart_IdCart(Integer idCart);
     List<Customer> findByOrders_IdOrder(Integer idOrder);
+    // Kiểm tra số điện thoại đã tồn tại
+    boolean existsByPhone(String phone);
+
+    // Kiểm tra email đã tồn tại
+    boolean existsByEmail(String email);
 }

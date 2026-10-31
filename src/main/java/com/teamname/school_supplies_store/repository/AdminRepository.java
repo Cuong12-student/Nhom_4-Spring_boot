@@ -6,4 +6,6 @@ import java.util.Optional;
 @Repository 
 public interface  AdminRepository extends JpaRepository<Admin,Integer>{
     Optional<Admin> findByUser_Id(Integer id);
+    boolean existsByPhone(String phone);
+boolean existsByEmail(String email);
 }

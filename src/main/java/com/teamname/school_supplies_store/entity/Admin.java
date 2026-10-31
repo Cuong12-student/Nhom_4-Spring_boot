@@ -1,6 +1,9 @@
 package com.teamname.school_supplies_store.entity; 
 import jakarta.persistence.Entity; 
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Pattern;
@@ -28,16 +31,14 @@ public class Admin{
     )
     @Column(nullable = false)
     private String name;
-    @NotBlank (message = "Tuổi không được trống")
-    @Pattern(
-        regexp="^[0-9_]+$",
-        message = "Tuổi chỉ có chữ số"
-    )
-    @Column (nullable = false) 
-    private int age;
-    @Enumerated(EnumType.STRING)
-    @NotBlank (message = "Giới tính không được trống")
-    @Column(nullable = false)
+    @NotNull(message = "Tuổi không được để trống")
+@Min(value = 1, message = "Tuổi phải lớn hơn 0")
+@Max(value = 120, message = "Tuổi không hợp lệ")
+@Column(nullable = false)
+private Integer age;
+    @NotNull(message = "Giới tính không được để trống")
+@Column(nullable = false)
+@Enumerated(EnumType.STRING)
     private Gender gender;
     @NotBlank (message = "Số điện thoại không được trống")
     @Pattern(
