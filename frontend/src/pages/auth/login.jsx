@@ -39,7 +39,7 @@ export default function Login() {
 
       switch (response.role) {
         case "CUSTOMER":
-          navigate("/customer");
+          navigate("/store");
           break;
 
         case "STAFF":
