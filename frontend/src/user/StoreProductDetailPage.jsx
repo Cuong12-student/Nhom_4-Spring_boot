@@ -1,5 +1,8 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { addCartItem, notifyCartUpdated } from './api/cartApi'
 import { formatPrice } from './format'
+import { getSessionUser } from './session'
 import './StoreProductDetailPage.css'
 
 const STATUS_LABELS = {
@@ -86,7 +89,37 @@ export default function StoreProductDetailPage({
   onRetry,
   onBack,
 }) {
+  const navigate = useNavigate()
+  const user = getSessionUser()
+  const [quantity, setQuantity] = useState(1)
+  const [adding, setAdding] = useState(false)
+  const [cartMessage, setCartMessage] = useState('')
+  const [cartError, setCartError] = useState('')
   const attributes = product ? getAttributes(product.attributes) : []
+
+  async function addToCart(goToCheckout = false) {
+    if (!user?.username) {
+      navigate('/login')
+      return
+    }
+    setAdding(true)
+    setCartMessage('')
+    setCartError('')
+    try {
+      const cart = await addCartItem(product.idVariant, quantity)
+      notifyCartUpdated()
+      setCartMessage('Đã thêm sản phẩm vào giỏ hàng.')
+      if (goToCheckout) {
+        const item = cart.items.find((cartItem) => cartItem.idVariant === product.idVariant)
+        if (item) navigate(`/checkout?items=${item.idCartItem}`)
+      }
+    } catch (error) {
+      console.error('Không thể thêm sản phẩm vào giỏ hàng:', error)
+      setCartError(error.message || 'Không thể thêm sản phẩm vào giỏ hàng.')
+    } finally {
+      setAdding(false)
+    }
+  }
 
   return (
     <main className="us-container us-detail">
@@ -147,9 +180,38 @@ export default function StoreProductDetailPage({
                     : 'Tạm hết hàng'}
               </p>
 
-              <button type="button" className="us-btn us-detail__buy">
-                Mua ngay
-              </button>
+              <div className="us-detail__purchase">
+                <label htmlFor="detail-quantity">Số lượng</label>
+                <input
+                  id="detail-quantity"
+                  type="number"
+                  min="1"
+                  max={Math.min(product.inventoryQuantity ?? 1, 99)}
+                  value={quantity}
+                  onChange={(event) => setQuantity(
+                    Math.min(99, product.inventoryQuantity ?? 1, Math.max(1, Number(event.target.value) || 1)),
+                  )}
+                  disabled={!product.inventoryQuantity}
+                />
+                <button
+                  type="button"
+                  className="us-btn us-detail__buy"
+                  disabled={adding || !product.inventoryQuantity}
+                  onClick={() => addToCart()}
+                >
+                  {adding ? 'Đang thêm...' : 'Thêm vào giỏ'}
+                </button>
+                <button
+                  type="button"
+                  className="us-btn us-btn--ghost us-detail__buy"
+                  disabled={adding || !product.inventoryQuantity}
+                  onClick={() => addToCart(true)}
+                >
+                  Mua ngay
+                </button>
+              </div>
+              {cartMessage && <p className="us-detail__cart-message" role="status">{cartMessage} <a href="/cart">Xem giỏ hàng</a></p>}
+              {cartError && <p className="us-detail__cart-error" role="alert">{cartError}</p>}
 
               <section className="us-detail__section">
                 <h2>Mô tả sản phẩm</h2>

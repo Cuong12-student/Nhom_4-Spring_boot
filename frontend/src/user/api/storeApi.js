@@ -5,6 +5,7 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL ?? ''
 
 const PRODUCTS_URL = `${API_BASE}/api/v1/store-page/products`
 const FILTER_OPTIONS_URL = `${API_BASE}/api/v1/store-page/filters`
+const HOME_PRODUCTS_URL = `${API_BASE}/api/v1/home/products`
 
 export class ApiError extends Error {
   constructor(status) {
@@ -51,6 +52,10 @@ export function buildProductQuery(filters) {
 
 export function fetchStoreProducts(query, signal) {
   return getJson(`${PRODUCTS_URL}?${query}`, signal)
+}
+
+export function fetchHomeProducts(signal) {
+  return getJson(HOME_PRODUCTS_URL, signal)
 }
 
 export function fetchStoreProductDetail(slug, sku, signal) {

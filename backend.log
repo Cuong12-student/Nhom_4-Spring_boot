@@ -1,0 +1,1493 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.teamname:school-supplies-store >-----------------
+[INFO] Building  0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.1.1:run (default-cli) > test-compile @ school-supplies-store >>>
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ school-supplies-store ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ school-supplies-store ---
+[INFO] Recompiling the module because of added or removed source files.
+[INFO] Compiling 51 source files with javac [debug parameters release 17] to target\classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ school-supplies-store ---
+[INFO] skip non existing resourceDirectory D:\File_Bai_Tap\webspringboot\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ school-supplies-store ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 17] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:4.1.1:run (default-cli) < test-compile @ school-supplies-store <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.1.1:run (default-cli) @ school-supplies-store ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-11-02T13:59:44.573+07:00  INFO 12064 --- [school-supplies-store] [           main] c.t.s.SchoolSuppliesStoreApplication     : Starting SchoolSuppliesStoreApplication using Java 27 with PID 12064 (D:\File_Bai_Tap\webspringboot\target\classes started by TKoWB in D:\File_Bai_Tap\webspringboot)
+2026-11-02T13:59:44.575+07:00  INFO 12064 --- [school-supplies-store] [           main] c.t.s.SchoolSuppliesStoreApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-11-02T13:59:45.053+07:00  INFO 12064 --- [school-supplies-store] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-02T13:59:45.116+07:00  INFO 12064 --- [school-supplies-store] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 15 JPA repository interfaces.
+2026-11-02T13:59:45.494+07:00  INFO 12064 --- [school-supplies-store] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-11-02T13:59:45.504+07:00  INFO 12064 --- [school-supplies-store] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-02T13:59:45.504+07:00  INFO 12064 --- [school-supplies-store] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-11-02T13:59:45.537+07:00  INFO 12064 --- [school-supplies-store] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 926 ms
+2026-11-02T13:59:45.654+07:00  INFO 12064 --- [school-supplies-store] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-02T13:59:45.680+07:00  INFO 12064 --- [school-supplies-store] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-11-02T13:59:45.937+07:00  INFO 12064 --- [school-supplies-store] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-02T13:59:45.957+07:00  INFO 12064 --- [school-supplies-store] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-02T13:59:46.231+07:00  INFO 12064 --- [school-supplies-store] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1d7f7962
+2026-11-02T13:59:46.232+07:00  INFO 12064 --- [school-supplies-store] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-02T13:59:46.284+07:00  INFO 12064 --- [school-supplies-store] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://127.0.0.1:3306/school_supplies]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.46
+	Default catalog/schema: school_supplies/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-02T13:59:47.151+07:00  INFO 12064 --- [school-supplies-store] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    alter table categories 
+       modify column status enum ('ACTIVE','INACTIVE') not null
+Hibernate: 
+    alter table product_variants 
+       modify column status enum ('ACTIVE','IN_STOCK','LOW_STOCK','OUT_OF_STOCK') not null
+Hibernate: 
+    alter table products 
+       modify column status enum ('ACTIVE','IN_STOCK','LOW_STOCK','OUT_OF_STOCK') not null
+Hibernate: 
+    alter table shipment 
+       modify column status enum ('DELIVERED','FAILED','IN_TRANSIT','PENDING','PICKED_UP','RETURNED') not null
+2026-11-02T13:59:47.383+07:00  INFO 12064 --- [school-supplies-store] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-02T13:59:47.447+07:00  INFO 12064 --- [school-supplies-store] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-02T13:59:48.117+07:00  WARN 12064 --- [school-supplies-store] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-02T13:59:48.177+07:00  WARN 12064 --- [school-supplies-store] [           main] .s.a.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 6c97678b-b445-419b-afa2-f45b1b8df5f7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-11-02T13:59:48.182+07:00  INFO 12064 --- [school-supplies-store] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-11-02T13:59:48.525+07:00  INFO 12064 --- [school-supplies-store] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-11-02T13:59:48.529+07:00  INFO 12064 --- [school-supplies-store] [           main] c.t.s.SchoolSuppliesStoreApplication     : Started SchoolSuppliesStoreApplication in 4.25 seconds (process running for 4.516)
+2026-11-02T14:00:26.386+07:00  INFO 12064 --- [school-supplies-store] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02T14:00:26.386+07:00  INFO 12064 --- [school-supplies-store] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-02T14:00:26.387+07:00  INFO 12064 --- [school-supplies-store] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at desc,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+2026-11-02T14:00:26.551+07:00  WARN 12064 --- [school-supplies-store] [nio-8080-exec-1] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at desc,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at desc,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        distinct c1_0.id_category,
+        c1_0.name 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        c1_0.name
+Hibernate: 
+    select
+        distinct c1_0.id_category,
+        c1_0.name 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        c1_0.name
+Hibernate: 
+    select
+        distinct p1_0.id_product,
+        p1_0.name,
+        c1_0.id_category 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        p1_0.name
+Hibernate: 
+    select
+        distinct p1_0.id_product,
+        p1_0.name,
+        c1_0.id_category 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        p1_0.name
+Hibernate: 
+    select
+        distinct jt.attr_key,
+        json_unquote(json_extract(v.attributes, concat('$."', jt.attr_key, '"'))) as attr_value 
+    from
+        product_variants v 
+    join
+        products p 
+            on p.id_product = v.id_product 
+    join
+        categories c 
+            on c.id_category = p.id_category 
+    cross join
+        json_table(json_keys(v.attributes), '$[*]'            columns (attr_key varchar(100) path '$')) jt 
+    where
+        v.status = 'ACTIVE' 
+        and p.status = 'ACTIVE' 
+        and c.status = 'ACTIVE'   
+        and v.attributes is not null   
+        and json_type(v.attributes) = 'OBJECT' 
+Hibernate: 
+    select
+        distinct jt.attr_key,
+        json_unquote(json_extract(v.attributes, concat('$."', jt.attr_key, '"'))) as attr_value 
+    from
+        product_variants v 
+    join
+        products p 
+            on p.id_product = v.id_product 
+    join
+        categories c 
+            on c.id_category = p.id_category 
+    cross join
+        json_table(json_keys(v.attributes), '$[*]'            columns (attr_key varchar(100) path '$')) jt 
+    where
+        v.status = 'ACTIVE' 
+        and p.status = 'ACTIVE' 
+        and c.status = 'ACTIVE'   
+        and v.attributes is not null   
+        and json_type(v.attributes) = 'OBJECT' 
+Hibernate: 
+    select
+        min(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        min(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        max(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        max(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        u1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        u1_0.id_user,
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.username 
+    from
+        admins a1_0 
+    join
+        users u1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        customers c1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    left join
+        staffs s1_0 
+            on u1_0.id_user=s1_0.id_user 
+    where
+        a1_0.id_user=?
+Hibernate: 
+    select
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.id_user,
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.username 
+    from
+        customers c1_0 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    join
+        users u1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        admins a1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        staffs s1_0 
+            on u1_0.id_user=s1_0.id_user 
+    where
+        c1_0.id_user=?
+Hibernate: 
+    select
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.id_user,
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.username 
+    from
+        staffs s1_0 
+    join
+        users u1_0 
+            on u1_0.id_user=s1_0.id_user 
+    left join
+        admins a1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        customers c1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    where
+        s1_0.id_user=?
+Hibernate: 
+    select
+        distinct c1_0.id_category,
+        c1_0.name 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        c1_0.name
+Hibernate: 
+    select
+        distinct p1_0.id_product,
+        p1_0.name,
+        c1_0.id_category 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        p1_0.name
+Hibernate: 
+    select
+        distinct jt.attr_key,
+        json_unquote(json_extract(v.attributes, concat('$."', jt.attr_key, '"'))) as attr_value 
+    from
+        product_variants v 
+    join
+        products p 
+            on p.id_product = v.id_product 
+    join
+        categories c 
+            on c.id_category = p.id_category 
+    cross join
+        json_table(json_keys(v.attributes), '$[*]'            columns (attr_key varchar(100) path '$')) jt 
+    where
+        v.status = 'ACTIVE' 
+        and p.status = 'ACTIVE' 
+        and c.status = 'ACTIVE'   
+        and v.attributes is not null   
+        and json_type(v.attributes) = 'OBJECT' 
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at desc,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        min(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        max(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        u1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        u1_0.id_user,
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.username 
+    from
+        admins a1_0 
+    join
+        users u1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        customers c1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    left join
+        staffs s1_0 
+            on u1_0.id_user=s1_0.id_user 
+    where
+        a1_0.id_user=?
+Hibernate: 
+    select
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.id_user,
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.username 
+    from
+        customers c1_0 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    join
+        users u1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        admins a1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        staffs s1_0 
+            on u1_0.id_user=s1_0.id_user 
+    where
+        c1_0.id_user=?
+Hibernate: 
+    select
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.id_user,
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.username 
+    from
+        staffs s1_0 
+    join
+        users u1_0 
+            on u1_0.id_user=s1_0.id_user 
+    left join
+        admins a1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        customers c1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    where
+        s1_0.id_user=?
+Hibernate: 
+    select
+        distinct c1_0.id_category,
+        c1_0.name 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        c1_0.name
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at desc,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        distinct p1_0.id_product,
+        p1_0.name,
+        c1_0.id_category 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        p1_0.name
+Hibernate: 
+    select
+        distinct jt.attr_key,
+        json_unquote(json_extract(v.attributes, concat('$."', jt.attr_key, '"'))) as attr_value 
+    from
+        product_variants v 
+    join
+        products p 
+            on p.id_product = v.id_product 
+    join
+        categories c 
+            on c.id_category = p.id_category 
+    cross join
+        json_table(json_keys(v.attributes), '$[*]'            columns (attr_key varchar(100) path '$')) jt 
+    where
+        v.status = 'ACTIVE' 
+        and p.status = 'ACTIVE' 
+        and c.status = 'ACTIVE'   
+        and v.attributes is not null   
+        and json_type(v.attributes) = 'OBJECT' 
+Hibernate: 
+    select
+        min(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        max(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        u1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        u1_0.id_user,
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.username 
+    from
+        admins a1_0 
+    join
+        users u1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        customers c1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    left join
+        staffs s1_0 
+            on u1_0.id_user=s1_0.id_user 
+    where
+        a1_0.id_user=?
+Hibernate: 
+    select
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.id_user,
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.username 
+    from
+        customers c1_0 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    join
+        users u1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        admins a1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        staffs s1_0 
+            on u1_0.id_user=s1_0.id_user 
+    where
+        c1_0.id_user=?
+Hibernate: 
+    select
+        s1_0.id_staff,
+        s1_0.address,
+        s1_0.age,
+        s1_0.email,
+        s1_0.gender,
+        s1_0.name,
+        s1_0.phone,
+        s1_0.id_user,
+        u1_0.id_user,
+        a1_0.id_admin,
+        a1_0.address,
+        a1_0.age,
+        a1_0.email,
+        a1_0.gender,
+        a1_0.name,
+        a1_0.phone,
+        a1_0.id_user,
+        c1_0.id_customer,
+        c1_0.address,
+        c1_0.age,
+        c2_0.id_cart,
+        c2_0.create_at,
+        c2_0.update_at,
+        c1_0.email,
+        c1_0.gender,
+        c1_0.name,
+        c1_0.phone,
+        c1_0.id_user,
+        u1_0.password,
+        u1_0.role,
+        u1_0.username 
+    from
+        staffs s1_0 
+    join
+        users u1_0 
+            on u1_0.id_user=s1_0.id_user 
+    left join
+        admins a1_0 
+            on u1_0.id_user=a1_0.id_user 
+    left join
+        customers c1_0 
+            on u1_0.id_user=c1_0.id_user 
+    left join
+        carts c2_0 
+            on c1_0.id_customer=c2_0.id_customer 
+    where
+        s1_0.id_user=?
+Hibernate: 
+    select
+        distinct c1_0.id_category,
+        c1_0.name 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        c1_0.name
+Hibernate: 
+    select
+        distinct p1_0.id_product,
+        p1_0.name,
+        c1_0.id_category 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        p1_0.name
+Hibernate: 
+    select
+        distinct jt.attr_key,
+        json_unquote(json_extract(v.attributes, concat('$."', jt.attr_key, '"'))) as attr_value 
+    from
+        product_variants v 
+    join
+        products p 
+            on p.id_product = v.id_product 
+    join
+        categories c 
+            on c.id_category = p.id_category 
+    cross join
+        json_table(json_keys(v.attributes), '$[*]'            columns (attr_key varchar(100) path '$')) jt 
+    where
+        v.status = 'ACTIVE' 
+        and p.status = 'ACTIVE' 
+        and c.status = 'ACTIVE'   
+        and v.attributes is not null   
+        and json_type(v.attributes) = 'OBJECT' 
+Hibernate: 
+    select
+        pv1_0.id_variant,
+        pv1_0.attributes,
+        pv1_0.created_at,
+        pv1_0.image,
+        pv1_0.price,
+        pv1_0.id_product,
+        p2_0.id_product,
+        p2_0.id_category,
+        c2_0.id_category,
+        c2_0.created_at,
+        c2_0.description,
+        c2_0.name,
+        c2_0.status,
+        c2_0.updated_at,
+        p2_0.created_at,
+        p2_0.description,
+        p2_0.main_image,
+        p2_0.name,
+        p2_0.slug,
+        p2_0.status,
+        p2_0.updated_at,
+        pv1_0.sku,
+        pv1_0.status,
+        pv1_0.updated_at 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    join
+        products p2_0 
+            on p2_0.id_product=pv1_0.id_product 
+    join
+        categories c2_0 
+            on c2_0.id_category=p2_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=? 
+    order by
+        pv1_0.created_at desc,
+        pv1_0.id_variant desc 
+    limit
+        ?, ?
+Hibernate: 
+    select
+        min(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?
+Hibernate: 
+    select
+        max(pv1_0.price) 
+    from
+        product_variants pv1_0 
+    join
+        products p1_0 
+            on p1_0.id_product=pv1_0.id_product 
+    join
+        categories c1_0 
+            on c1_0.id_category=p1_0.id_category 
+    where
+        pv1_0.status=? 
+        and p1_0.status=? 
+        and c1_0.status=?

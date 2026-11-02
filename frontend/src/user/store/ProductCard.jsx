@@ -20,7 +20,7 @@ export default function ProductCard({ product, onOpen }) {
   return (
     <a
       className="us-card"
-      href={`/${encodeURIComponent(product.slug)}/${encodeURIComponent(product.sku)}`}
+      href={`/store/${encodeURIComponent(product.slug)}/${encodeURIComponent(product.sku)}`}
       onClick={(event) => onOpen(event, product)}
       aria-label={`Xem chi tiết ${product.name}`}
     >

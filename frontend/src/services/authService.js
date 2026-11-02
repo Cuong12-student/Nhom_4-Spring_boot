@@ -1,8 +1,6 @@
-const API_URL = "http://localhost:8080/api/auth";
+const API_URL = `${import.meta.env.VITE_API_BASE_URL ?? ""}/api/auth`;
 
 export const register = async (data) => {
-  console.log("Register gửi lên backend:", data);
-
   const response = await fetch(`${API_URL}/register`, {
     method: "POST",
     headers: {

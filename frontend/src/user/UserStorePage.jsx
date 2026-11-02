@@ -8,6 +8,7 @@ import SortBar from './store/SortBar'
 import ProductGrid from './store/ProductGrid'
 import Pagination from './store/Pagination'
 import { buildProductQuery } from './api/storeApi'
+import UserFooter from './UserFooter'
 import { useFilterOptions, useStoreProductDetail, useStoreProducts } from './hooks'
 import { INITIAL_FILTERS, SORT_OPTIONS, countActiveFilters } from './storeFilters'
 import './userTheme.css'
@@ -15,18 +16,31 @@ import './UserStorePage.css'
 
 function getProductPathFromUrl() {
   const parts = window.location.pathname.split('/').filter(Boolean)
-  if (parts.length !== 2) return null
+  const productParts = parts.length === 3 && parts[0] === 'store'
+    ? parts.slice(1)
+    : parts
+  if (productParts.length !== 2) return null
 
   try {
-    const [slug, sku] = parts.map((part) => decodeURIComponent(part))
+    const [slug, sku] = productParts.map((part) => decodeURIComponent(part))
     return slug && sku ? { slug, sku } : null
   } catch {
     return null
   }
 }
 
+function getInitialFilters() {
+  const filters = { ...INITIAL_FILTERS }
+  const params = new URLSearchParams(window.location.search)
+  filters.q = params.get('q') ?? ''
+  filters.categoryIds = params.getAll('categoryId')
+    .map(Number)
+    .filter((id) => Number.isSafeInteger(id) && id > 0)
+  return filters
+}
+
 export default function UserStorePage() {
-  const [filters, setFilters] = useState(INITIAL_FILTERS)
+  const [filters, setFilters] = useState(getInitialFilters)
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(getProductPathFromUrl)
   const resultsRef = useRef(null)
@@ -54,7 +68,7 @@ export default function UserStorePage() {
 
     event.preventDefault()
     const url = new URL(window.location.href)
-    url.pathname = `/${encodeURIComponent(product.slug)}/${encodeURIComponent(product.sku)}`
+    url.pathname = `/store/${encodeURIComponent(product.slug)}/${encodeURIComponent(product.sku)}`
     url.search = ''
     url.hash = ''
     window.history.pushState({ storeProduct: true }, '', url)
@@ -69,7 +83,7 @@ export default function UserStorePage() {
     }
 
     const url = new URL(window.location.href)
-    url.pathname = '/'
+    url.pathname = '/store'
     url.search = ''
     url.hash = ''
     window.history.replaceState(null, '', url)
@@ -168,6 +182,7 @@ export default function UserStorePage() {
           onRetry={productDetail.reload}
           onBack={returnToStore}
         />
+        <UserFooter />
       </div>
     )
   }
@@ -265,6 +280,7 @@ export default function UserStorePage() {
           )}
         </section>
       </main>
+      <UserFooter />
     </div>
   )
 }

@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { USER_NAV_ITEMS } from './navItems'
+import { fetchCart } from './api/cartApi'
+import { getSessionUser } from './session'
 import './userTheme.css'
 import './UserNavBar.css'
 
@@ -17,13 +19,46 @@ import './UserNavBar.css'
 export default function UserNavBar({
   activeKey,
   items = USER_NAV_ITEMS,
-  brandName = 'School Supplies',
+  brandName = 'Hiên Sách',
   brandHref = '/',
   onNavigate,
   actions = null,
 }) {
   const [open, setOpen] = useState(false)
+  const [cartCount, setCartCount] = useState(0)
+  const [cartError, setCartError] = useState(false)
   const collapsible = items.length > 1
+
+  useEffect(() => {
+    let active = true
+    async function loadCartCount() {
+      const user = getSessionUser()
+      if (!user?.username) {
+        setCartCount(0)
+        setCartError(false)
+        return
+      }
+      try {
+        const cart = await fetchCart()
+        if (active) {
+          setCartCount(cart.totalQuantity)
+          setCartError(false)
+        }
+      } catch (error) {
+        console.error('Không thể tải số lượng giỏ hàng:', error)
+        if (active) setCartError(true)
+      }
+    }
+
+    loadCartCount()
+    window.addEventListener('cart-updated', loadCartCount)
+    window.addEventListener('session-updated', loadCartCount)
+    return () => {
+      active = false
+      window.removeEventListener('cart-updated', loadCartCount)
+      window.removeEventListener('session-updated', loadCartCount)
+    }
+  }, [])
 
   function handleClick(event, item) {
     setOpen(false)
@@ -63,7 +98,18 @@ export default function UserNavBar({
               aria-current={item.key === activeKey ? 'page' : undefined}
               onClick={(event) => handleClick(event, item)}
             >
-              {item.label}
+              {item.key === 'cart' ? (
+                <span className="un-link__cart">
+                  {item.label}
+                  <span
+                    className="un-cart-badge"
+                    aria-label={`${cartCount} sản phẩm trong giỏ hàng`}
+                    title={cartError ? 'Không thể cập nhật số lượng giỏ hàng' : undefined}
+                  >
+                    {cartError ? '!' : cartCount}
+                  </span>
+                </span>
+              ) : item.label}
             </a>
           ))}
         </nav>

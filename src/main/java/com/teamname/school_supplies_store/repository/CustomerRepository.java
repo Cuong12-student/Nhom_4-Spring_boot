@@ -7,6 +7,7 @@ import java.util.List;
 @Repository 
 public interface CustomerRepository extends JpaRepository<Customer,Integer>{
     Optional<Customer> findByUser_Id(Integer id);
+    Optional<Customer> findByUser_Username(String username);
     Optional<Customer> findByCart_IdCart(Integer idCart);
     List<Customer> findByOrders_IdOrder(Integer idOrder);
     // Kiểm tra số điện thoại đã tồn tại

@@ -8,6 +8,7 @@ public record StorePageProductResponse(
         Long idVariant,
         String name,
         String mainImage,
+        Long idCategory,
         String categoryName,
         BigDecimal price,
         String slug,

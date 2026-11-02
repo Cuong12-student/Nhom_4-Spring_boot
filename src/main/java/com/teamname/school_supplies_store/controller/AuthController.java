@@ -5,6 +5,7 @@ import com.teamname.school_supplies_store.dto.LoginRequest;
 import com.teamname.school_supplies_store.dto.LoginResponse;
 import com.teamname.school_supplies_store.dto.RegisterRequest;
 import com.teamname.school_supplies_store.service.AuthService;
+import com.teamname.school_supplies_store.service.CustomerSessionService;
 
 import jakarta.validation.Valid;
 
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final CustomerSessionService customerSessionService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, CustomerSessionService customerSessionService) {
         this.authService = authService;
+        this.customerSessionService = customerSessionService;
     }
     // Đăng nhập
     @PostMapping("/login")
@@ -40,5 +43,12 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("Đăng ký tài khoản thành công");
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(
+            @RequestHeader(value = "Authorization", required = false) String authorization) {
+        customerSessionService.revoke(authorization);
+        return ResponseEntity.noContent().build();
     }
 }

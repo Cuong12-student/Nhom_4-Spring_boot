@@ -253,6 +253,7 @@ public class StorePageServiceImpl implements StorePageService {
                 productVariant.getIdVariant(),
                 product.getName(),
                 productVariant.getImage() != null ? productVariant.getImage() : product.getMainImage(),
+                product.getCategory().getIdCategory(),
                 product.getCategory().getName(),
                 productVariant.getPrice(),
                 product.getSlug(),

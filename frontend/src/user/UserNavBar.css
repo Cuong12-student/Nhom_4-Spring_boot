@@ -77,6 +77,25 @@
   background: var(--u-amber);
 }
 
+.un-link__cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.un-cart-badge {
+  display: inline-grid;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--u-amber);
+  color: var(--u-cocoa);
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .un-actions {
   margin-left: auto;
   display: flex;

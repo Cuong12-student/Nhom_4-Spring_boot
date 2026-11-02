@@ -21,15 +21,18 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
+    private final CustomerSessionService customerSessionService;
     
     // Constructor Injection
     public AuthService(
             UserRepository userRepository,
-            CustomerRepository customerRepository
+            CustomerRepository customerRepository,
+            CustomerSessionService customerSessionService
         ) {
 
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
+        this.customerSessionService = customerSessionService;
         
     }
 
@@ -58,7 +61,8 @@ public class AuthService {
         return new LoginResponse(
                 "Đăng nhập thành công",
                 user.getUsername(),
-                user.getRole().name()
+                user.getRole().name(),
+                customerSessionService.create(user.getUsername())
         );
     }
 
