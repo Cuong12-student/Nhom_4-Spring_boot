@@ -1,0 +1,149 @@
+.un-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--u-nav-h);
+  background: var(--u-cocoa);
+  color: var(--u-cream);
+  box-shadow: 0 2px 0 var(--u-amber), 0 8px 24px -12px rgba(61, 36, 21, 0.6);
+}
+
+.un-inner {
+  max-width: var(--u-max-w);
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.un-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--u-cream);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+.un-brand__logo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--u-amber);
+  color: var(--u-cocoa);
+}
+
+.un-links {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  height: 100%;
+}
+
+.un-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 16px;
+  color: rgba(255, 243, 223, 0.78);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.un-link:hover {
+  color: #fff;
+  background: rgba(255, 243, 223, 0.08);
+}
+
+.un-link.is-active {
+  color: #fff;
+}
+
+.un-link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--u-amber);
+}
+
+.un-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.un-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(255, 243, 223, 0.25);
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.un-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--u-cream);
+}
+
+@media (max-width: 720px) {
+  .un-inner {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .un-toggle {
+    display: flex;
+  }
+
+  .un-links {
+    position: absolute;
+    top: var(--u-nav-h);
+    left: 0;
+    right: 0;
+    height: auto;
+    flex-direction: column;
+    padding: 8px 16px 16px;
+    background: var(--u-cocoa-2);
+    border-top: 1px solid rgba(255, 243, 223, 0.12);
+    display: none;
+  }
+
+  .un-links.is-open {
+    display: flex;
+  }
+
+  .un-link {
+    padding: 12px 8px;
+    border-radius: 8px;
+  }
+
+  .un-link.is-active::after {
+    left: 8px;
+    right: auto;
+    width: 24px;
+    bottom: 6px;
+    border-radius: 3px;
+  }
+}
