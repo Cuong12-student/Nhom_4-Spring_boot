@@ -1,0 +1,17 @@
+package com.teamname.school_supplies_store.user.store.dto.response;
+
+import com.teamname.school_supplies_store.enums.ProductStatus;
+
+import java.math.BigDecimal;
+
+public record StorePageProductResponse(
+        Long idVariant,
+        String name,
+        String mainImage,
+        Long idCategory,
+        String categoryName,
+        BigDecimal price,
+        String slug,
+        String sku,
+        ProductStatus status) {
+}

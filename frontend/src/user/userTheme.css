@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+
+/* Design tokens dùng chung cho mọi trang user (tông ấm). */
+:root {
+  --u-bg: #fdf6ec;
+  --u-surface: #fffcf6;
+  --u-surface-2: #f8ecda;
+  --u-border: #ecd9bf;
+  --u-border-strong: #dcc3a0;
+  --u-text: #4a2f21;
+  --u-text-soft: #7d5c47;
+  --u-accent: #c2512f;
+  --u-accent-hover: #a74126;
+  --u-accent-soft: #fbe3d6;
+  --u-amber: #e8a33d;
+  --u-amber-soft: #fcefd2;
+  --u-cocoa: #3d2415;
+  --u-cocoa-2: #52331f;
+  --u-cream: #fff3df;
+  --u-radius: 14px;
+  --u-shadow: 0 1px 2px rgba(74, 47, 33, 0.06), 0 10px 24px -14px rgba(74, 47, 33, 0.22);
+  --u-font: 'Be Vietnam Pro', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --u-nav-h: 64px;
+  --u-max-w: 1240px;
+}
+
+body {
+  background: var(--u-bg);
+  color: var(--u-text);
+  font-family: var(--u-font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--u-accent);
+  outline-offset: 2px;
+}

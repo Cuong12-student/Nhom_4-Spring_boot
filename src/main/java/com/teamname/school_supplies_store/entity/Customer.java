@@ -27,8 +27,8 @@ public class Customer{
     private Integer idCustomer;
     @NotBlank (message = "Tên khách hàng không được trống")
     @Pattern(
-        regexp="^[a-zA-Z_]+$",
-        message="Tên khách hàng chỉ có chữ hoa và chữ cái"
+        regexp="^[\\p{L}\\p{M}][\\p{L}\\p{M} '-]*$",
+        message="Tên khách hàng chỉ được chứa chữ cái, khoảng trắng và dấu nối"
     )
     @Column(nullable = false)
     private String name;

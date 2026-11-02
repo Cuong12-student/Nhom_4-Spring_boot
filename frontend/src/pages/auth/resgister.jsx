@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { register } from "/src/services/authService";
 
 function Register() {
@@ -87,8 +87,6 @@ function Register() {
 
     try {
       setLoading(true);
-
-      console.log("Dữ liệu đăng ký:", data);
 
       await register(data);
 

@@ -35,7 +35,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+.auth-page {
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
@@ -371,7 +371,7 @@ a {
    5. KHU VỰC CHÍNH
 ===================================================== */
 
-main {
+.auth-page main {
   width: 100%;
   min-height: 400px;
   padding: 36px 24px 50px;

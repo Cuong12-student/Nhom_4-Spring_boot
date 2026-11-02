@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Register from "./resgister";
 import "/src/css/login.css";
 import { login } from "/src/services/authService";
+import { setSessionUser } from "/src/user/session";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -10,6 +11,7 @@ export default function Login() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("dang-nhap");
+  const [searchText, setSearchText] = useState("");
 
   const navigate = useNavigate();
 
@@ -17,6 +19,11 @@ export default function Login() {
   const changeTab = (tab) => {
     setActiveTab(tab);
     setStatus("");
+  };
+
+  const searchProducts = (event) => {
+    event.preventDefault();
+    navigate(`/store${searchText.trim() ? `?q=${encodeURIComponent(searchText.trim())}` : ""}`);
   };
 
   // Xử lý đăng nhập
@@ -39,7 +46,8 @@ export default function Login() {
 
       switch (response.role) {
         case "CUSTOMER":
-          navigate("/customer");
+          setSessionUser({ username: response.username, role: response.role, token: response.token });
+          navigate("/");
           break;
 
         case "STAFF":
@@ -53,7 +61,7 @@ export default function Login() {
         default:
           setStatus("Tài khoản không có quyền truy cập");
       }
-    } catch (error) {
+    } catch {
       setStatus("Đăng nhập thất bại! Vui lòng kiểm tra lại tài khoản.");
     } finally {
       setLoading(false);
@@ -61,20 +69,18 @@ export default function Login() {
   };
 
   return (
-    <>
+    <div className="auth-page">
       {/* HEADER */}
       <header className="top">
         <div className="wrap">
-          <form
-            className="search"
-            role="search"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className="search" role="search" onSubmit={searchProducts}>
             <input
               id="q"
               type="search"
               placeholder="Tìm kiếm sản phẩm"
               aria-label="Tìm kiếm sản phẩm"
+              value={searchText}
+              onChange={(event) => setSearchText(event.target.value)}
             />
 
             <button type="submit" aria-label="Tìm">
@@ -95,11 +101,11 @@ export default function Login() {
 
           <a
             className="logo"
-            href="#trang-chu"
+            href="/"
             aria-label="Hiên Sách, trang chủ"
             onClick={(e) => {
               e.preventDefault();
-              changeTab("dang-nhap");
+              navigate("/");
             }}
           >
             <svg viewBox="0 0 48 48" aria-hidden="true">
@@ -174,22 +180,7 @@ export default function Login() {
               <span className="lbl">Đăng ký</span>
             </a>
 
-            <button type="button" aria-label="Yêu thích, 0 sản phẩm">
-              <svg
-                viewBox="0 0 24 24"
-                width="26"
-                height="26"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-              >
-                <path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.4a4.3 4.3 0 0 1 7.5 2.4C19.5 15.4 12 20 12 20Z"></path>
-              </svg>
-              <span className="badge">0</span>
-            </button>
-
-            <button type="button" aria-label="Giỏ hàng, 0 sản phẩm">
+            <button type="button" aria-label="Giỏ hàng" onClick={() => navigate("/cart")}>
               <svg
                 viewBox="0 0 24 24"
                 width="26"
@@ -213,13 +204,7 @@ export default function Login() {
       {/* MENU */}
       <nav className="nav" aria-label="Menu chính">
         <div className="wrap">
-          <button
-            className="cat-btn"
-            id="catBtn"
-            type="button"
-            aria-expanded="false"
-            aria-controls="catPanel"
-          >
+          <a className="cat-btn" href="/store">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -229,25 +214,11 @@ export default function Login() {
             >
               <path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"></path>
             </svg>
-            Danh mục sản phẩm
-          </button>
-
-          <a className="nav-link" href="#tin-tuc">
-            Tin tức
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m6 9 6 6 6-6"></path>
-            </svg>
+            Cửa hàng
           </a>
 
-          <a className="nav-link" href="#gioi-thieu">
-            Giới thiệu
+          <a className="nav-link" href="/">
+            Trang chủ
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -261,36 +232,6 @@ export default function Login() {
           </a>
         </div>
 
-        <div className="cat-panel" id="catPanel" hidden={true}>
-          <div className="wrap">
-            <ul>
-              <li>
-                <a href="#sach-thieu-nhi">Sách thiếu nhi</a>
-              </li>
-              <li>
-                <a href="#truyen-tranh">Truyện tranh</a>
-              </li>
-              <li>
-                <a href="#van-hoc">Văn học</a>
-              </li>
-              <li>
-                <a href="#ky-nang-song">Kỹ năng sống</a>
-              </li>
-              <li>
-                <a href="#sach-giao-khoa">Sách giáo khoa</a>
-              </li>
-              <li>
-                <a href="#ngoai-ngu">Ngoại ngữ</a>
-              </li>
-              <li>
-                <a href="#khoa-hoc">Khoa học – Công nghệ</a>
-              </li>
-              <li>
-                <a href="#van-phong-pham">Văn phòng phẩm</a>
-              </li>
-            </ul>
-          </div>
-        </div>
       </nav>
 
       {/* BANNER */}
@@ -395,7 +336,7 @@ export default function Login() {
           </h1>
 
           <div className="crumbs">
-            <a href="#trang-chu">Trang chủ</a>
+            <a href="/">Trang chủ</a>
             <span aria-hidden="true">/</span>
             <span id="crumb">
               {activeTab === "dang-nhap"
@@ -500,8 +441,8 @@ export default function Login() {
                     Ghi nhớ đăng nhập
                   </label>
 
-                  <a href="#quen-mat-khau" id="forgot">
-                    Quên mật khẩu?
+                  <a href="mailto:hello@hiensach.vn?subject=Ho%20tro%20tai%20khoan" id="forgot">
+                    Cần hỗ trợ đăng nhập?
                   </a>
                 </div>
 
@@ -567,6 +508,6 @@ export default function Login() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
