@@ -307,10 +307,11 @@ function AdminHome() {
             <PanelHeading title="Sản phẩm" action="Thêm sản phẩm" onAction={() => setProductEditor({ name: "", slug: "", description: "", mainImage: "", categoryId: categories.find((item) => item.status === "ACTIVE")?.idCategory ?? "", status: "ACTIVE" })} />
             <div className="admin-table-wrap">
               <table className="admin-table">
-                <thead><tr><th>Sản phẩm</th><th>Danh mục</th><th>Biến thể</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+                <thead><tr><th>Ảnh</th><th>Sản phẩm</th><th>Danh mục</th><th>Biến thể</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
                 <tbody>
                   {products.map((product) => (
                     <tr key={product.idProduct}>
+                      <td><ProductThumbnail product={product} /></td>
                       <td><strong>{product.name}</strong><small>{product.slug}</small></td>
                       <td>{product.categoryName}</td>
                       <td>{product.variants.length}</td>
@@ -322,7 +323,7 @@ function AdminHome() {
                       </td>
                     </tr>
                   ))}
-                  {!products.length && <EmptyRow columns={5} />}
+                  {!products.length && <EmptyRow columns={6} />}
                 </tbody>
               </table>
             </div>
@@ -514,6 +515,25 @@ function StatusBadge({ status }) {
 
 function EmptyRow({ columns }) {
   return <tr><td colSpan={columns} className="admin-empty">Chưa có dữ liệu.</td></tr>;
+}
+
+function ProductThumbnail({ product }) {
+  const [failed, setFailed] = useState(false);
+  const image = product.mainImage || product.variants.find((variant) => variant.image)?.image;
+
+  if (!image || failed) {
+    return <span className="admin-product-image-placeholder" aria-label="Chưa có ảnh sản phẩm">Ảnh</span>;
+  }
+
+  return (
+    <img
+      className="admin-product-image"
+      src={image}
+      alt={product.name}
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
 }
 
 function Modal({ title, onClose, wide = false, children }) {
