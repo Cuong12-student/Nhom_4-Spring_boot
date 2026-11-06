@@ -298,6 +298,26 @@
   overflow-wrap: anywhere;
 }
 
+.admin-product-image,
+.admin-product-image-placeholder {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--admin-line);
+  border-radius: 9px;
+  background: #f5f7f5;
+}
+
+.admin-product-image {
+  object-fit: cover;
+}
+
+.admin-product-image-placeholder {
+  color: var(--admin-muted);
+  font-size: 10px;
+}
+
 .admin-actions {
   display: flex;
   flex-wrap: wrap;
