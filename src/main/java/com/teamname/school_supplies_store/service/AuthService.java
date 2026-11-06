@@ -15,6 +15,7 @@ import com.teamname.school_supplies_store.repository.CustomerRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class AuthService {
@@ -22,17 +23,20 @@ public class AuthService {
     private final UserRepository userRepository;
     private final CustomerRepository customerRepository;
     private final CustomerSessionService customerSessionService;
+    private final PasswordEncoder passwordEncoder;
     
     // Constructor Injection
     public AuthService(
             UserRepository userRepository,
             CustomerRepository customerRepository,
-            CustomerSessionService customerSessionService
+            CustomerSessionService customerSessionService,
+            PasswordEncoder passwordEncoder
         ) {
 
         this.userRepository = userRepository;
         this.customerRepository = customerRepository;
         this.customerSessionService = customerSessionService;
+        this.passwordEncoder = passwordEncoder;
         
     }
 
@@ -50,8 +54,7 @@ public class AuthService {
                                 "Tên đăng nhập hoặc mật khẩu không chính xác"
                         ));
 
-        if (!request.getPassword().equals(user.getPassword()
-)) {
+        if (!Boolean.TRUE.equals(user.getEnabled()) || !passwordMatches(request.getPassword(), user)) {
 
             throw new RuntimeException(
                     "Tên đăng nhập hoặc mật khẩu không chính xác"
@@ -64,6 +67,19 @@ public class AuthService {
                 user.getRole().name(),
                 customerSessionService.create(user.getUsername())
         );
+    }
+
+    private boolean passwordMatches(String rawPassword, User user) {
+        String storedPassword = user.getPassword();
+        if (storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$") || storedPassword.startsWith("$2y$")) {
+            return passwordEncoder.matches(rawPassword, storedPassword);
+        }
+        if (!rawPassword.equals(storedPassword)) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(rawPassword));
+        userRepository.save(user);
+        return true;
     }
 
     // =========================
@@ -101,7 +117,7 @@ public class AuthService {
         }
 
         
-       String password = request.getPassword();
+       String password = passwordEncoder.encode(request.getPassword());
 
         // 6. Tạo User
         User user = new User(

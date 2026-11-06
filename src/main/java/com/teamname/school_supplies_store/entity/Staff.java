@@ -27,8 +27,8 @@ public class Staff{
     private Integer idStaff;
     @NotBlank (message = "Tên nhân viên không được trống")
     @Pattern(
-        regexp="^[a-zA-Z_]+$",
-        message="Tên nhân viên chỉ có chữ hoa và chữ cái"
+        regexp="^[\\p{L}\\p{M}][\\p{L}\\p{M} '-]*$",
+        message="Tên nhân viên chỉ được chứa chữ cái, khoảng trắng và dấu nối"
     )
     @Column(nullable = false)
     private String name;
@@ -43,7 +43,7 @@ private Integer age;
     private Gender gender;
     @NotBlank (message = "Số điện thoại không được trống")
     @Pattern(
-        regexp="^[0-9_]+$",
+        regexp="^[0-9]+$",
         message = "Số điện thoại chỉ có chữ số"
     )
     @Size(min=10,max=10,message = "Số điện thoại phải đủ 10 số")

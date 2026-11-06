@@ -8,4 +8,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     List<Product> findByVariants_IdVariant(Long idVariant);
     List<Product> findByCategory_IdCategory(Long idCategory);
     boolean existsByNameIgnoreCase(String name);
+    boolean existsBySlug(String slug);
+    boolean existsBySlugAndIdProductNot(String slug, Long idProduct);
 }

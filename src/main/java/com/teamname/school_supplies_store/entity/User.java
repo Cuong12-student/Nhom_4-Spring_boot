@@ -29,6 +29,8 @@ public class User {
     private String username;
     @Column(nullable = false, length = 255)
     private String password;
+    @Column(nullable = false, columnDefinition = "TINYINT(1) NOT NULL DEFAULT 1")
+    private Boolean enabled = true;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToOne (mappedBy="user")
@@ -66,6 +68,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Role getRole() {

@@ -44,9 +44,10 @@ export default function Login() {
         password: password,
       });
 
+      setSessionUser({ username: response.username, role: response.role, token: response.token });
+
       switch (response.role) {
         case "CUSTOMER":
-          setSessionUser({ username: response.username, role: response.role, token: response.token });
           navigate("/");
           break;
 

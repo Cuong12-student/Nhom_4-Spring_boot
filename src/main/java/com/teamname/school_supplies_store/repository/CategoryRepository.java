@@ -9,4 +9,6 @@ public interface CategoryRepository extends JpaRepository<Category,Long>{
     Optional<Category> findByProducts_Variants_IdVariant(Long idVariant);
     Optional<Category> findByName(String name);
     boolean existsByName(String name);
+    boolean existsByNameIgnoreCase(String name);
+    boolean existsByNameIgnoreCaseAndIdCategoryNot(String name, Long idCategory);
 }
