@@ -22,7 +22,7 @@ public class OrderDetail{
     private int quantity;
     @NotNull(message="Giá thành phải hiển thị")
     @Positive(message = "Giá sản phẩm phải lớn hơn 0")
-    @Column(nullable = false,precision = 12,scale = 0)
+    @Column(nullable = false,precision = 13,scale = 2)
     private BigDecimal price;
     @ManyToOne
     @JoinColumn(name="id_variant")
