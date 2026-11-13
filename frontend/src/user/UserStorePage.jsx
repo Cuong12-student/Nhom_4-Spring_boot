@@ -167,6 +167,7 @@ export default function UserStorePage() {
   }, [filtersOpen])
 
   const page = products.data
+  const pageInfo = page?.page
   const activeCount = countActiveFilters(filters)
   const hasResults = page && page.content.length > 0
 
@@ -188,10 +189,10 @@ export default function UserStorePage() {
   }
 
   let summary = ''
-  if (page) {
-    summary = page.totalElements === 0
+  if (page && pageInfo) {
+    summary = pageInfo.totalElements === 0
       ? 'Không có sản phẩm'
-      : `${page.number * page.size + 1}–${page.number * page.size + page.content.length} / ${page.totalElements} sản phẩm`
+      : `${pageInfo.number * pageInfo.size + 1}–${pageInfo.number * pageInfo.size + page.content.length} / ${pageInfo.totalElements} sản phẩm`
   }
 
   return (
@@ -272,8 +273,8 @@ export default function UserStorePage() {
                 onOpenProduct={openProduct}
               />
               <Pagination
-                page={page?.number ?? 0}
-                totalPages={page?.totalPages ?? 0}
+                page={pageInfo?.number ?? 0}
+                totalPages={pageInfo?.totalPages ?? 0}
                 onChange={changePage}
               />
             </>

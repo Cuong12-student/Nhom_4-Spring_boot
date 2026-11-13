@@ -24,6 +24,7 @@ public class Order{
     @Column(name="id_order")
     private Integer idOrder;
     private LocalDateTime orderDate;
+    private LocalDateTime approvedAt;
     private BigDecimal totalAmount;
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
@@ -54,6 +55,12 @@ public class Order{
     }
     public void setOrderDate(LocalDateTime orderDate){
         this.orderDate=orderDate;
+    }
+    public LocalDateTime getApprovedAt(){
+        return approvedAt;
+    }
+    public void setApprovedAt(LocalDateTime approvedAt){
+        this.approvedAt=approvedAt;
     }
     public BigDecimal getTotalAmount(){
         return totalAmount;

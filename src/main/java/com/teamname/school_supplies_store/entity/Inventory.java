@@ -22,6 +22,10 @@ public class Inventory {
     @Column(name = "quantity", nullable = false)
     private Integer quantity = 0;
 
+    @Version
+    @Column(nullable = false, columnDefinition = "BIGINT NOT NULL DEFAULT 0")
+    private Long version = 0L;
+
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_variant", nullable = false, unique = true, foreignKey = @ForeignKey(name = "fk_inventory_variant"))
     private ProductVariant variant;
