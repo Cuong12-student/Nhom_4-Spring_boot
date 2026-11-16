@@ -1,5 +1,6 @@
 package com.teamname.school_supplies_store.service;
-
+import com.teamname.school_supplies_store.entity.User;
+import com.teamname.school_supplies_store.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,7 +15,10 @@ public class CustomerSessionService {
 
     private static final long SESSION_LIFETIME_SECONDS = 12 * 60 * 60;
     private final ConcurrentMap<String, Session> sessions = new ConcurrentHashMap<>();
-
+    private final UserRepository userRepository;
+    public CustomerSessionService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     public String create(String username) {
         String token = UUID.randomUUID().toString();
         sessions.put(token, new Session(username, Instant.now().plusSeconds(SESSION_LIFETIME_SECONDS)));
@@ -36,7 +40,17 @@ public class CustomerSessionService {
         }
         return session.username();
     }
+    public SessionInfo validate(String authorization) {
+        String username = requireUsername(authorization);
 
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> unauthorized());
+
+        return new SessionInfo(
+                user.getUsername(),
+                user.getRole().name()
+        );
+    }
     public void revoke(String authorization) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             return;
@@ -47,6 +61,6 @@ public class CustomerSessionService {
     private ResponseStatusException unauthorized() {
         return new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Phiên đăng nhập không hợp lệ hoặc đã hết hạn.");
     }
-
+    public record SessionInfo(String username, String role) {}
     private record Session(String username, Instant expiresAt) {}
 }

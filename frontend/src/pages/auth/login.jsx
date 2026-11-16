@@ -23,7 +23,9 @@ export default function Login() {
 
   const searchProducts = (event) => {
     event.preventDefault();
-    navigate(`/store${searchText.trim() ? `?q=${encodeURIComponent(searchText.trim())}` : ""}`);
+    navigate(
+      `/store${searchText.trim() ? `?q=${encodeURIComponent(searchText.trim())}` : ""}`,
+    );
   };
 
   // Xử lý đăng nhập
@@ -44,7 +46,11 @@ export default function Login() {
         password: password,
       });
 
-      setSessionUser({ username: response.username, role: response.role, token: response.token });
+      setSessionUser({
+        username: response.username,
+        role: response.role,
+        token: response.token,
+      });
 
       switch (response.role) {
         case "CUSTOMER":
@@ -181,7 +187,11 @@ export default function Login() {
               <span className="lbl">Đăng ký</span>
             </a>
 
-            <button type="button" aria-label="Giỏ hàng" onClick={() => navigate("/cart")}>
+            <button
+              type="button"
+              aria-label="Giỏ hàng"
+              onClick={() => navigate("/cart")}
+            >
               <svg
                 viewBox="0 0 24 24"
                 width="26"
@@ -232,7 +242,6 @@ export default function Login() {
             </svg>
           </a>
         </div>
-
       </nav>
 
       {/* BANNER */}
@@ -441,10 +450,6 @@ export default function Login() {
                     <input type="checkbox" id="remember" />
                     Ghi nhớ đăng nhập
                   </label>
-
-                  <a href="mailto:hello@hiensach.vn?subject=Ho%20tro%20tai%20khoan" id="forgot">
-                    Cần hỗ trợ đăng nhập?
-                  </a>
                 </div>
 
                 <button className="submit" type="submit" disabled={loading}>

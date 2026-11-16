@@ -1,4 +1,3 @@
-
 package com.teamname.school_supplies_store.service;
 
 import com.teamname.school_supplies_store.dto.LoginRequest;

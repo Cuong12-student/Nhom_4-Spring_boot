@@ -171,6 +171,58 @@ public class CartService {
                         order, orderDetailRepository.findByOrder_IdOrder(order.getId())))
                 .toList();
     }
+    @Transactional
+public OrderHistoryResponse cancelOrder(String username, Integer orderId) {
+    // Tìm khách hàng đang đăng nhập
+    Customer customer = findCustomer(username);
+
+    // Tìm đơn hàng
+    Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Không tìm thấy đơn hàng."));
+
+    // Kiểm tra đơn hàng có thuộc khách hàng hiện tại không
+    if (!order.getCustomer().getId().equals(customer.getId())) {
+        throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Không tìm thấy đơn hàng.");
+    }
+
+    // Chỉ cho phép hủy đơn hàng đang chờ xử lý
+    if (order.getStatus() != OrderStatus.PENDING) {
+        throw new ResponseStatusException(
+                HttpStatus.CONFLICT,
+                "Chỉ có thể hủy đơn hàng đang chờ xử lý.");
+    }
+
+    // Lấy chi tiết đơn hàng
+    List<OrderDetail> details =
+            orderDetailRepository.findByOrder_IdOrder(order.getId());
+
+    // Hoàn lại số lượng tồn kho
+    for (OrderDetail detail : details) {
+        ProductVariant variant = detail.getVariant();
+        Inventory inventory = variant.getInventory();
+
+        if (inventory == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Không tìm thấy thông tin tồn kho của sản phẩm.");
+        }
+
+        int currentQuantity = inventory.getQuantity() == null
+                ? 0
+                : inventory.getQuantity();
+
+        inventory.setQuantity(currentQuantity + detail.getQuantity());
+    }
+
+    // Cập nhật trạng thái đơn hàng
+    order.setStatus(OrderStatus.CANCELLED);
+    orderRepository.save(order);
+
+    // Trả về thông tin đơn hàng sau khi hủy
+    return toOrderResponse(order, details);
+}
 
     private Customer findCustomer(String username) {
         return customerRepository.findByUser_Username(username)

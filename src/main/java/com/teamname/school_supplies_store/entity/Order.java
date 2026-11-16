@@ -12,7 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;  
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.ManyToOne;
 import  com.teamname.school_supplies_store.enums.OrderStatus;
 
@@ -34,8 +33,7 @@ public class Order{
     @ManyToOne
     @JoinColumn(name="id_staff")
     private Staff staff;
-    @OneToOne(mappedBy = "order")
-    private Shipment shipment;
+    
     @OneToMany (mappedBy="order")
     private List<OrderDetail> orderDetail;
     public Order(){}
@@ -85,12 +83,6 @@ public class Order{
     }
     public void setStaff(Staff staff){
         this.staff=staff;
-    }
-    public Shipment getShipment(){
-        return shipment;
-    }
-    public void setShipment(Shipment shipment){
-        this.shipment=shipment;
     }
     public List<OrderDetail> getDetail(){
         return orderDetail;

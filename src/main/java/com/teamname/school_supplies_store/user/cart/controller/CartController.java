@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.PatchMapping;
 import java.util.List;
 
 @RestController
@@ -79,4 +79,13 @@ public class CartController {
     public List<OrderHistoryResponse> getOrderHistory(@RequestHeader("Authorization") String authorization) {
         return cartService.getOrderHistory(customerSessionService.requireUsername(authorization));
     }
+    @PatchMapping("/orders/{orderId}/cancel")
+public OrderHistoryResponse cancelOrder(
+        @PathVariable Integer orderId,
+        @RequestHeader("Authorization") String authorization) {
+
+    return cartService.cancelOrder(
+            customerSessionService.requireUsername(authorization),
+            orderId);
+}
 }
