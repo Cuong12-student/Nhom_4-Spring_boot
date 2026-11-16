@@ -1,11 +1,32 @@
 package com.teamname.school_supplies_store.staff;
 
-import com.teamname.school_supplies_store.entity.*;
+import com.teamname.school_supplies_store.entity.Customer;
+import com.teamname.school_supplies_store.entity.Inventory;
+import com.teamname.school_supplies_store.entity.Order;
+import com.teamname.school_supplies_store.entity.OrderDetail;
+import com.teamname.school_supplies_store.entity.Product;
+import com.teamname.school_supplies_store.entity.ProductVariant;
+import com.teamname.school_supplies_store.entity.Staff;
+import com.teamname.school_supplies_store.entity.StockReceipt;
+import com.teamname.school_supplies_store.entity.User;
 import com.teamname.school_supplies_store.enums.OrderStatus;
 import com.teamname.school_supplies_store.enums.Role;
-import com.teamname.school_supplies_store.repository.*;
+import com.teamname.school_supplies_store.repository.OrderDetailRepository;
+import com.teamname.school_supplies_store.repository.OrderRepository;
+import com.teamname.school_supplies_store.repository.ProductVariantRepository;
+import com.teamname.school_supplies_store.repository.StaffRepository;
+import com.teamname.school_supplies_store.repository.UserRepository;
 import com.teamname.school_supplies_store.service.CustomerSessionService;
-import com.teamname.school_supplies_store.staff.StaffDtos.*;
+import com.teamname.school_supplies_store.staff.inventory.dto.ReceiptInput;
+import com.teamname.school_supplies_store.staff.inventory.dto.ReceiptLineInput;
+import com.teamname.school_supplies_store.staff.inventory.dto.ReceiptView;
+import com.teamname.school_supplies_store.staff.inventory.repository.StockReceiptRepository;
+import com.teamname.school_supplies_store.staff.inventory.service.StaffInventoryService;
+import com.teamname.school_supplies_store.staff.order.repository.StaffOrderRepository;
+import com.teamname.school_supplies_store.staff.order.service.StaffOrderService;
+import com.teamname.school_supplies_store.staff.service.StaffAccessService;
+import com.teamname.school_supplies_store.staff.statistics.dto.Statistics;
+import com.teamname.school_supplies_store.staff.statistics.service.StaffStatisticsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -21,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class StaffServiceTest {
+class StaffFeatureServicesTest {
     private final CustomerSessionService sessions = mock(CustomerSessionService.class);
     private final UserRepository users = mock(UserRepository.class);
     private final StaffRepository staff = mock(StaffRepository.class);
@@ -30,8 +51,13 @@ class StaffServiceTest {
     private final OrderDetailRepository details = mock(OrderDetailRepository.class);
     private final ProductVariantRepository variants = mock(ProductVariantRepository.class);
     private final StockReceiptRepository receipts = mock(StockReceiptRepository.class);
-    private final StaffService service = new StaffService(sessions, users, staff, orders,
-            lockedOrders, details, variants, receipts);
+    private final StaffAccessService staffAccess = new StaffAccessService(sessions, users, staff);
+    private final StaffOrderService orderService = new StaffOrderService(
+            staffAccess, orders, lockedOrders, details);
+    private final StaffInventoryService inventoryService = new StaffInventoryService(
+            staffAccess, variants, receipts);
+    private final StaffStatisticsService statisticsService = new StaffStatisticsService(
+            staffAccess, orders, receipts, inventoryService);
     private Staff employee;
     private ProductVariant variant;
     private User user;
@@ -75,12 +101,12 @@ class StaffServiceTest {
     @Test
     void cancelRestoresStockOnlyOnce() {
         Order order = pendingOrder(2);
-        service.decide("Bearer staff", 1, false);
+        orderService.decide("Bearer staff", 1, false);
         assertEquals(OrderStatus.CANCELLED, order.getStatus());
         assertEquals(6, variant.getInventory().getQuantity());
         assertSame(employee, order.getStaff());
         ResponseStatusException error = assertThrows(ResponseStatusException.class,
-                () -> service.decide("Bearer staff", 1, false));
+                () -> orderService.decide("Bearer staff", 1, false));
         assertEquals(HttpStatus.CONFLICT, error.getStatusCode());
         assertEquals(6, variant.getInventory().getQuantity());
     }
@@ -88,23 +114,25 @@ class StaffServiceTest {
     @Test
     void approvalRecordsDateAndDoesNotRestoreStock() {
         Order order = pendingOrder(2);
-        service.decide("Bearer staff", 1, true);
+        orderService.decide("Bearer staff", 1, true);
         assertEquals(OrderStatus.CONFIRMED, order.getStatus());
         assertNotNull(order.getApprovedAt());
         assertSame(employee, order.getStaff());
         assertEquals(4, variant.getInventory().getQuantity());
-        assertThrows(ResponseStatusException.class, () -> service.decide("Bearer staff", 1, false));
+        assertThrows(ResponseStatusException.class, () -> orderService.decide("Bearer staff", 1, false));
     }
 
     @Test
     void otherRolesAndDisabledStaffCannotAccess() {
         user.setRole(Role.CUSTOMER);
         assertEquals(HttpStatus.FORBIDDEN,
-                assertThrows(ResponseStatusException.class, () -> service.listOrders("Bearer staff")).getStatusCode());
+                assertThrows(ResponseStatusException.class,
+                        () -> orderService.listOrders("Bearer staff")).getStatusCode());
         user.setRole(Role.STAFF);
         user.setEnabled(false);
         assertEquals(HttpStatus.FORBIDDEN,
-                assertThrows(ResponseStatusException.class, () -> service.listOrders("Bearer staff")).getStatusCode());
+                assertThrows(ResponseStatusException.class,
+                        () -> orderService.listOrders("Bearer staff")).getStatusCode());
         verifyNoInteractions(orders);
     }
 
@@ -112,7 +140,7 @@ class StaffServiceTest {
     void receiptRecordsCostAndIncreasesExistingStock() {
         when(variants.findById(10L)).thenReturn(Optional.of(variant));
         when(receipts.saveAndFlush(any())).thenAnswer(invocation -> invocation.getArgument(0));
-        ReceiptView result = service.receive("Bearer staff",
+        ReceiptView result = inventoryService.receive("Bearer staff",
                 new ReceiptInput(List.of(new ReceiptLineInput(10L, 3, new BigDecimal("2500")))));
         assertEquals(7, variant.getInventory().getQuantity());
         assertEquals(0, new BigDecimal("7500").compareTo(result.total()));
@@ -125,7 +153,7 @@ class StaffServiceTest {
     void receivingRejectsStockOverflow() {
         variant.getInventory().setQuantity(Integer.MAX_VALUE);
         when(variants.findById(10L)).thenReturn(Optional.of(variant));
-        ResponseStatusException error = assertThrows(ResponseStatusException.class, () -> service.receive(
+        ResponseStatusException error = assertThrows(ResponseStatusException.class, () -> inventoryService.receive(
                 "Bearer staff", new ReceiptInput(List.of(new ReceiptLineInput(10L, 1, BigDecimal.TEN)))));
         assertEquals(HttpStatus.CONFLICT, error.getStatusCode());
         assertEquals(Integer.MAX_VALUE, variant.getInventory().getQuantity());
@@ -134,7 +162,7 @@ class StaffServiceTest {
 
     @Test
     void statisticsRejectsReversedDateRange() {
-        ResponseStatusException error = assertThrows(ResponseStatusException.class, () -> service.statistics(
+        ResponseStatusException error = assertThrows(ResponseStatusException.class, () -> statisticsService.statistics(
                 "Bearer staff", LocalDate.of(2026, 11, 14), LocalDate.of(2026, 11, 13)));
         assertEquals(HttpStatus.BAD_REQUEST, error.getStatusCode());
         verifyNoInteractions(orders, receipts);
@@ -152,7 +180,7 @@ class StaffServiceTest {
         receipt.setTotalCost(new BigDecimal("7500"));
         when(orders.findAll()).thenReturn(List.of(accepted, historical, waiting));
         when(receipts.findAll()).thenReturn(List.of(receipt));
-        Statistics result = service.statistics("Bearer staff", LocalDate.now(), LocalDate.now());
+        Statistics result = statisticsService.statistics("Bearer staff", LocalDate.now(), LocalDate.now());
         assertEquals(1, result.dailyRevenue().size());
         assertEquals(1, result.dailyRevenue().get(0).orderCount());
         assertEquals(0, new BigDecimal("20000").compareTo(result.revenue()));
