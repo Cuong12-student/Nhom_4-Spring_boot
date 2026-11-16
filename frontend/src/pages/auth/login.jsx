@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Register from "./resgister";
 import "/src/css/login.css";
 import { login } from "/src/services/authService";
-import { setSessionUser } from "/src/user/session";
+import { setSessionUser } from "/src/shared/auth/session";
 
 export default function Login() {
   const [username, setUsername] = useState("");

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { adminRequest, logoutAdminSession } from "./adminApi";
-import { clearSessionUser, getSessionUser } from "../user/session";
+import { clearSessionUser, getSessionUser } from "../shared/auth/session";
 import "./admin.css";
 
 const sections = [

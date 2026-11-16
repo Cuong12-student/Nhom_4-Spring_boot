@@ -2,19 +2,18 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "./pages/auth/login";
-import StaffHome from "./Staff/StaffHome";
+import StaffHome from "./staff/pages/StaffHome";
 import AdminHome from "./Admin/AdminHome";
-import HomePage from "./user/home/HomePage";
-import UserStorePage from "./user/UserStorePage";
-import UserCartPage from "./user/UserCartPage";
-import UserCheckoutPage from "./user/UserCheckoutPage";
-import UserProfilePage from "./user/UserProfilePage";
+import HomePage from "./user/pages/home/HomePage";
+import UserStorePage from "./user/pages/store/StorePage";
+import UserCartPage from "./user/pages/cart/CartPage";
+import UserCheckoutPage from "./user/pages/checkout/CheckoutPage";
+import UserProfilePage from "./user/pages/profile/ProfilePage";
 
-import { getSessionUser, validateSession } from "./user/session";
+import { getSessionUser, validateSession } from "./shared/auth/session";
 
 function AppContent() {
   const [checkingSession, setCheckingSession] = useState(true);
-  const [sessionValid, setSessionValid] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -24,16 +23,14 @@ function AppContent() {
 
       if (!user?.token) {
         if (active) {
-          setSessionValid(false);
           setCheckingSession(false);
         }
         return;
       }
 
-      const valid = await validateSession();
+      await validateSession();
 
       if (active) {
-        setSessionValid(valid);
         setCheckingSession(false);
       }
     }
