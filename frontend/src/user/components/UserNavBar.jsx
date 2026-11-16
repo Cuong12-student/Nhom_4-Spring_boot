@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { USER_NAV_ITEMS } from './navItems'
-import { fetchCart } from './api/cartApi'
-import { getSessionUser } from './session'
-import './userTheme.css'
+import { USER_NAV_ITEMS } from '../utils/navItems'
+import { fetchCart } from '../api/cartApi'
+import { getSessionUser } from '../../shared/auth/session'
+import '../styles/userTheme.css'
 import './UserNavBar.css'
 
 /**

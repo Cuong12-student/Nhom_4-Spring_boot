@@ -5,13 +5,13 @@ import {
   fetchCart,
   fetchProfile,
   notifyCartUpdated,
-} from "./api/cartApi";
-import { formatPrice } from "./format";
-import UserFooter from "./UserFooter";
-import UserNavBar from "./UserNavBar";
-import { getSessionUser } from "./session";
-import "./userTheme.css";
-import "./customerPages.css";
+} from "../../api/cartApi";
+import { formatPrice } from "../../utils/format";
+import UserFooter from "../../components/UserFooter";
+import UserNavBar from "../../components/UserNavBar";
+import { getSessionUser } from "../../../shared/auth/session";
+import "../../styles/userTheme.css";
+import "../../styles/customerPages.css";
 
 const ORDER_STATUS_LABELS = {
   PENDING: "Chờ xác nhận",

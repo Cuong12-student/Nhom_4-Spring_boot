@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { fetchFilterOptions, fetchStoreProductDetail, fetchStoreProducts } from './api/storeApi'
+import { fetchFilterOptions, fetchStoreProductDetail, fetchStoreProducts } from '../../api/storeApi'
 
 // Cả hai hook lưu kết quả kèm "key" của request đã tạo ra nó, nhờ vậy
 // `loading` được suy ra (key hiện tại khác key của kết quả) mà không phải

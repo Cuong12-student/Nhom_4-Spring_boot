@@ -1,4 +1,4 @@
-import { formatPrice } from '../format'
+import { formatPrice } from '../../../utils/format'
 import { attributeLabel } from '../storeFilters'
 
 export default function ActiveFilters({

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { formatPrice } from '../format'
+import { formatPrice } from '../../../utils/format'
 
 function ImagePlaceholder() {
   return (

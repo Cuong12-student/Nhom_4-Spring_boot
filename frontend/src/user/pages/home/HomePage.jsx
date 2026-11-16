@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchHomeProducts } from '../api/storeApi'
-import { formatPrice } from '../format'
-import UserFooter from '../UserFooter'
-import UserNavBar from '../UserNavBar'
-import '../userTheme.css'
-import '../customerPages.css'
+import { fetchHomeProducts } from '../../api/storeApi'
+import { formatPrice } from '../../utils/format'
+import UserFooter from '../../components/UserFooter'
+import UserNavBar from '../../components/UserNavBar'
+import '../../styles/userTheme.css'
+import '../../styles/customerPages.css'
 
 function chooseRandom(items, count) {
   const shuffled = [...items]

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { formatPrice } from '../format'
+import { formatPrice } from '../../../utils/format'
 
 // Chọn bước nhảy "tròn" theo độ rộng khoảng giá (ví dụ 495.000 -> 1.000).
 function niceStep(span) {

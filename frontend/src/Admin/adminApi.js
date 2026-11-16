@@ -1,4 +1,4 @@
-import { getSessionUser } from "../user/session";
+import { getSessionUser } from "../shared/auth/session";
 
 const API_URL = `${import.meta.env.VITE_API_BASE_URL ?? ""}/api/admin`;
 

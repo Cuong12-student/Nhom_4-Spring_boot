@@ -1,4 +1,5 @@
 const SESSION_KEY = "hiensach.customer";
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
 
 export function getSessionUser() {
   try {

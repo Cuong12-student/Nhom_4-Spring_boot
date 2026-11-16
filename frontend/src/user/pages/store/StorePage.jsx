@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import UserNavBar from "./UserNavBar";
+import UserNavBar from "../../components/UserNavBar";
 import StoreProductDetailPage from "./StoreProductDetailPage";
-import SearchBox from "./store/SearchBox";
-import FilterPanel from "./store/FilterPanel";
-import ActiveFilters from "./store/ActiveFilters";
-import SortBar from "./store/SortBar";
-import ProductGrid from "./store/ProductGrid";
-import Pagination from "./store/Pagination";
-import { buildProductQuery } from "./api/storeApi";
-import UserFooter from "./UserFooter";
+import SearchBox from "./components/SearchBox";
+import FilterPanel from "./components/FilterPanel";
+import ActiveFilters from "./components/ActiveFilters";
+import SortBar from "./components/SortBar";
+import ProductGrid from "./components/ProductGrid";
+import Pagination from "./components/Pagination";
+import { buildProductQuery } from "../../api/storeApi";
+import UserFooter from "../../components/UserFooter";
 import {
   useFilterOptions,
   useStoreProductDetail,
@@ -19,8 +19,8 @@ import {
   SORT_OPTIONS,
   countActiveFilters,
 } from "./storeFilters";
-import "./userTheme.css";
-import "./UserStorePage.css";
+import "../../styles/userTheme.css";
+import "./StorePage.css";
 
 function getProductPathFromUrl() {
   const parts = window.location.pathname.split("/").filter(Boolean);

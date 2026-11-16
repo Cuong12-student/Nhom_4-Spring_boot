@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { addCartItem, notifyCartUpdated } from './api/cartApi'
-import { formatPrice } from './format'
-import { getSessionUser } from './session'
+import { addCartItem, notifyCartUpdated } from '../../api/cartApi'
+import { formatPrice } from '../../utils/format'
+import { getSessionUser } from '../../../shared/auth/session'
 import './StoreProductDetailPage.css'
 
 const STATUS_LABELS = {

@@ -1,4 +1,4 @@
-import './userTheme.css'
+import '../styles/userTheme.css'
 import './UserFooter.css'
 
 export default function UserFooter() {

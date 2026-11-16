@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchCart, notifyCartUpdated, removeCartItem, updateCartItem } from './api/cartApi'
-import { formatPrice } from './format'
-import UserFooter from './UserFooter'
-import UserNavBar from './UserNavBar'
-import { getSessionUser } from './session'
-import './userTheme.css'
-import './customerPages.css'
+import { fetchCart, notifyCartUpdated, removeCartItem, updateCartItem } from '../../api/cartApi'
+import { formatPrice } from '../../utils/format'
+import UserFooter from '../../components/UserFooter'
+import UserNavBar from '../../components/UserNavBar'
+import { getSessionUser } from '../../../shared/auth/session'
+import '../../styles/userTheme.css'
+import '../../styles/customerPages.css'
 
 function productPath(item) {
   return `/store/${encodeURIComponent(item.slug)}/${encodeURIComponent(item.sku)}`

@@ -1,5 +1,5 @@
 import { PAGE_SIZES, SORT_OPTIONS } from '../storeFilters'
-import StoreSelect from './StoreSelect'
+import StoreSelect from '../../../../shared/components/StoreSelect'
 
 export default function SortBar({
   summary,

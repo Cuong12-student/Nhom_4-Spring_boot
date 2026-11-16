@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchCart, fetchOrderHistory, fetchProfile } from "./api/cartApi";
-import { logout } from "./api/sessionApi";
-import { formatPrice } from "./format";
-import UserFooter from "./UserFooter";
-import UserNavBar from "./UserNavBar";
-import { clearSessionUser, getSessionUser } from "./session";
-import "./userTheme.css";
-import "./customerPages.css";
-import { cancelOrder } from "./api/cartApi";
+import { fetchCart, fetchOrderHistory, fetchProfile, cancelOrder } from "../../api/cartApi";
+import { logout } from "../../api/sessionApi";
+import { formatPrice } from "../../utils/format";
+import UserFooter from "../../components/UserFooter";
+import UserNavBar from "../../components/UserNavBar";
+import { clearSessionUser, getSessionUser } from "../../../shared/auth/session";
+import "../../styles/userTheme.css";
+import "../../styles/customerPages.css";
 const ORDER_STATUS_LABELS = {
   PENDING: "Chờ xác nhận",
   CONFIRMED: "Đã xác nhận",
