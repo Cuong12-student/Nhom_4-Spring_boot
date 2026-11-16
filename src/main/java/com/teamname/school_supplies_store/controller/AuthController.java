@@ -51,4 +51,13 @@ public class AuthController {
         customerSessionService.revoke(authorization);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/me")
+public ResponseEntity<CustomerSessionService.SessionInfo> getCurrentUser(
+        @RequestHeader(value = "Authorization", required = false) String authorization) {
+
+    CustomerSessionService.SessionInfo sessionInfo =
+            customerSessionService.validate(authorization);
+
+    return ResponseEntity.ok(sessionInfo);
+}
 }
